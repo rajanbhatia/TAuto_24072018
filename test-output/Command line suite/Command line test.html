@@ -1,0 +1,239 @@
+<html>
+<head>
+<title>TestNG:  Command line test</title>
+<link href="../testng.css" rel="stylesheet" type="text/css" />
+<link href="../my-testng.css" rel="stylesheet" type="text/css" />
+
+<style type="text/css">
+.log { display: none;} 
+.stack-trace { display: none;} 
+</style>
+<script type="text/javascript">
+<!--
+function flip(e) {
+  current = e.style.display;
+  if (current == 'block') {
+    e.style.display = 'none';
+    return 0;
+  }
+  else {
+    e.style.display = 'block';
+    return 1;
+  }
+}
+
+function toggleBox(szDivId, elem, msg1, msg2)
+{
+  var res = -1;  if (document.getElementById) {
+    res = flip(document.getElementById(szDivId));
+  }
+  else if (document.all) {
+    // this is the way old msie versions work
+    res = flip(document.all[szDivId]);
+  }
+  if(elem) {
+    if(res == 0) elem.innerHTML = msg1; else elem.innerHTML = msg2;
+  }
+
+}
+
+function toggleAllBoxes() {
+  if (document.getElementsByTagName) {
+    d = document.getElementsByTagName('div');
+    for (i = 0; i < d.length; i++) {
+      if (d[i].className == 'log') {
+        flip(d[i]);
+      }
+    }
+  }
+}
+
+// -->
+</script>
+
+</head>
+<body>
+<h2 align='center'>Command line test</h2><table border='1' align="center">
+<tr>
+<td>Tests passed/Failed/Skipped:</td><td>32/0/0</td>
+</tr><tr>
+<td>Started on:</td><td>Mon May 21 09:44:38 NZST 2018</td>
+</tr>
+<tr><td>Total time:</td><td>34 seconds (34138 ms)</td>
+</tr><tr>
+<td>Included groups:</td><td></td>
+</tr><tr>
+<td>Excluded groups:</td><td></td>
+</tr>
+</table><p/>
+<small><i>(Hover the method name to see the test class name)</i></small><p/>
+<table width='100%' border='1' class='invocation-passed'>
+<tr><td colspan='4' align='center'><b>PASSED TESTS</b></td></tr>
+<tr><td><b>Test method</b></td>
+<td width="30%"><b>Exception</b></td>
+<td width="10%"><b>Time (seconds)</b></td>
+<td><b>Instance</b></td>
+</tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 1, Open Browser, , , https://portsafe-test.cmo-compliance.com/, , </td>
+<td></td>
+<td>5</td>
+<td>Master@6743e411</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 2, Enter Text, Login, Username Textfield, test_automation_ff, Xpath, //*[@id='ctl00_mainContent_loginControl_loginNameTextBox']</td>
+<td></td>
+<td>0</td>
+<td>Master@6743e411</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 3, Enter Text, Login, Password Textfield, Welcome2018!, Xpath, //input[@id='ctl00_mainContent_loginControl_passwordTextBox']</td>
+<td></td>
+<td>0</td>
+<td>Master@6743e411</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 4, Click, Login, Login button, , Xpath, //input[@id='ctl00_mainContent_loginControl_loginButton']</td>
+<td></td>
+<td>2</td>
+<td>Master@6743e411</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 5, Click, Dashboard, Form Filler tab, , Xpath, //a[@id='ctl00_ctl00_pagePlaceHolder_dashboardTabs_79e2360c-6f73-497a-9f1a-f305ece655c5']</td>
+<td></td>
+<td>1</td>
+<td>Master@6743e411</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 6, Click, Dashboard, Form Filler > Report Hazard link, , Xpath, //*[@id='ctl00_ctl00_pagePlaceHolder_pagePlaceholder_customDashboardControl_columnsRepeater_ctl00_dashboardColumn_widgetRepeater_ctl00_widgetContainer_widget_repeater_ctl01_createObjectNameLabel']</td>
+<td></td>
+<td>0</td>
+<td>Master@6743e411</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 7, Select Text, Hazard_Report_Selection, Org Unit dropdown, Container Terminals, Xpath, //*[@id="ctl00_ctl00_dialogHolder_ctl00_ctl00_pagePlaceHolder_pagePlaceholder_customDashboardControl_columnsRepeater_ctl00_dashboardColumn_widgetRepeater_ctl00_widgetContainer_widget_createSelfAssessmentOperation_selectDataForElectronicFormDialog_popupInnerContent_groupDdl_table"]/tbody/tr/td[2]/img</td>
+<td></td>
+<td>3</td>
+<td>Master@6743e411</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 8, Select Text, Hazard_Report_Selection, Entity dropdown, *Container Terminals*, Xpath, //*[@id='ctl00_ctl00_dialogHolder_ctl00_ctl00_pagePlaceHolder_pagePlaceholder_customDashboardControl_columnsRepeater_ctl00_dashboardColumn_widgetRepeater_ctl00_widgetContainer_widget_createSelfAssessmentOperation_selectDataForElectronicFormDialog_popupInnerContent_auditeeDdl_table']/tbody/tr/td[2]/img</td>
+<td></td>
+<td>2</td>
+<td>Master@6743e411</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 9, Select Text, Hazard_Report_Selection, Vessel dropdown, *NO VESSEL*, Xpath, //*[@id='ctl00_ctl00_dialogHolder_ctl00_ctl00_pagePlaceHolder_pagePlaceholder_customDashboardControl_columnsRepeater_ctl00_dashboardColumn_widgetRepeater_ctl00_widgetContainer_widget_createSelfAssessmentOperation_selectDataForElectronicFormDialog_popupInnerContent_AuditeeTypeAfterAuditeeSelectControl_table']/tbody/tr/td[2]/img</td>
+<td></td>
+<td>2</td>
+<td>Master@6743e411</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 10, Click, Hazard_Report_Selection, Event Date picker, , Xpath, //*[@id="ctl00_ctl00_dialogHolder_ctl00_ctl00_pagePlaceHolder_pagePlaceholder_customDashboardControl_columnsRepeater_ctl00_dashboardColumn_widgetRepeater_ctl00_widgetContainer_widget_createSelfAssessmentOperation_selectDataForElectronicFormDialog_popupInnerContent_auditDatePanel_startAuditDateCalendar_dateTextBox"]</td>
+<td></td>
+<td>0</td>
+<td>Master@6743e411</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 11, Select Text, Hazard_Report_Selection, Event Date Month dropdown, Apr, Xpath, //*[@id="ui-datepicker-div"]/div[1]/div/select[1]</td>
+<td></td>
+<td>0</td>
+<td>Master@6743e411</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 12, Select Text, Hazard_Report_Selection, Event Date Year dropdown, 2018, Xpath, //*[@id="ui-datepicker-div"]/div[1]/div/select[2]</td>
+<td></td>
+<td>0</td>
+<td>Master@6743e411</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 13, Click, Hazard_Report_Selection, Event Date Day, , Xpath, //*[@id="ui-datepicker-div"]/table/tbody/tr[2]/td[3]/a</td>
+<td></td>
+<td>0</td>
+<td>Master@6743e411</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC002, Submit Hazard Report, 14, Pause Execution (specify seconds), , , 1, , </td>
+<td></td>
+<td>1</td>
+<td>Master@6743e411</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 15, Enter Text (auto parameterise), Hazard_Report_Selection, Event Title textfield, Automated Testing Event, Xpath, //*[@id='ctl00_ctl00_dialogHolder_ctl00_ctl00_pagePlaceHolder_pagePlaceholder_customDashboardControl_columnsRepeater_ctl00_dashboardColumn_widgetRepeater_ctl00_widgetContainer_widget_createSelfAssessmentOperation_selectDataForElectronicFormDialog_popupInnerContent_auditNameTextBox']</td>
+<td></td>
+<td>0</td>
+<td>Master@6743e411</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 16, Click, Hazard_Report_Selection, Ok button, , Xpath, //*[@id='ctl00_ctl00_dialogHolder_ctl00_ctl00_pagePlaceHolder_pagePlaceholder_customDashboardControl_columnsRepeater_ctl00_dashboardColumn_widgetRepeater_ctl00_widgetContainer_widget_createSelfAssessmentOperation_selectDataForElectronicFormDialog_btnOK_linkButton']/span</td>
+<td></td>
+<td>0</td>
+<td>Master@6743e411</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 17, Click, Hazard_Report_Entry, Commence Hazard Form button, , Xpath, //*[@id='ctl00_ctl00_pagePlaceHolder_Content_questionView_0_questionPanel_questionHolder_AuditQuestion_0_answerHolder_answer0_button']</td>
+<td></td>
+<td>1</td>
+<td>Master@6743e411</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC002, Submit Hazard Report, 14, Pause Execution (specify seconds), , , 1, , </td>
+<td></td>
+<td>1</td>
+<td>Master@6743e411</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 19, Click, Hazard_Report_Entry, Hazard Detail > Reported By Someone checkbox, , Xpath, //*[@id='ctl00_ctl00_pagePlaceHolder_Content_questionView_1_questionPanel_questionHolder_AuditQuestion_1_answerHolder_answer1']</td>
+<td></td>
+<td>0</td>
+<td>Master@6743e411</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 20, Click, Hazard_Report_Entry, Hazard Detail > Contractor radiobutton, , Xpath, //*[@id='ctl00_ctl00_pagePlaceHolder_Content_questionView_1_questionPanel_questionHolder_AuditQuestion_1_answerHolder_answer4']</td>
+<td></td>
+<td>0</td>
+<td>Master@6743e411</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC002, Submit Hazard Report, 14, Pause Execution (specify seconds), , , 1, , </td>
+<td></td>
+<td>1</td>
+<td>Master@6743e411</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 22, Enter Text (textarea), Hazard_Report_Entry, Hazard Detail > Description textarea, Hazard Description, Xpath, //*[@id='ctl00_ctl00_pagePlaceHolder_Content_questionView_1_questionPanel_questionHolder_AuditQuestion_1_answerHolder_answer15_textArea']</td>
+<td></td>
+<td>0</td>
+<td>Master@6743e411</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 23, Click, Hazard_Report_Entry, Location Map > Port Map radiobutton, , Xpath, //*[@id='ctl00_ctl00_pagePlaceHolder_Content_questionView_2_questionPanel_questionHolder_AuditQuestion_2_answerHolder_answer16']</td>
+<td></td>
+<td>0</td>
+<td>Master@6743e411</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC002, Submit Hazard Report, 14, Pause Execution (specify seconds), , , 1, , </td>
+<td></td>
+<td>1</td>
+<td>Master@6743e411</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 25, Click, Hazard_Report_Entry, Hazard Location > Fergusson Container Terminal radiobutton, , Xpath, //*[@id='ctl00_ctl00_pagePlaceHolder_Content_questionView_5_questionPanel_questionHolder_AuditQuestion_5_answerHolder_answer35']</td>
+<td></td>
+<td>0</td>
+<td>Master@6743e411</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 26, Click, Hazard_Report_Entry, Fergusson Specific Location > Berth radiobutton, , Xpath, //*[@id='ctl00_ctl00_pagePlaceHolder_Content_questionView_6_questionPanel_questionHolder_AuditQuestion_6_answerHolder_answer48']</td>
+<td></td>
+<td>0</td>
+<td>Master@6743e411</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 27, Click, Hazard_Report_Entry, Hazard Classification > Health and Safety checkbox, , Xpath, //*[@id='ctl00_ctl00_pagePlaceHolder_Content_questionView_19_questionPanel_questionHolder_AuditQuestion_19_answerHolder_answer163']</td>
+<td></td>
+<td>2</td>
+<td>Master@6743e411</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC002, Submit Hazard Report, 14, Pause Execution (specify seconds), , , 1, , </td>
+<td></td>
+<td>1</td>
+<td>Master@6743e411</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 29, Click, Hazard_Report_Entry, Energy > Human checkbox, , Xpath, //*[@id='ctl00_ctl00_pagePlaceHolder_Content_questionView_20_questionPanel_questionHolder_AuditQuestion_20_answerHolder_answer166']</td>
+<td></td>
+<td>0</td>
+<td>Master@6743e411</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC002, Submit Hazard Report, 14, Pause Execution (specify seconds), , , 1, , </td>
+<td></td>
+<td>1</td>
+<td>Master@6743e411</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 30, Click, Hazard_Report_Entry, Hazard Controlled > Yes radiobutton, , Xpath, //*[@id='ctl00_ctl00_pagePlaceHolder_Content_questionView_21_questionPanel_questionHolder_AuditQuestion_21_answerHolder_answer178']</td>
+<td></td>
+<td>0</td>
+<td>Master@6743e411</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 31, Click, Hazard_Report_Entry, Submit to Supervisor button, , Xpath, //*[@id='ctl00_ctl00_pagePlaceHolder_Content_questionView_21_questionPanel_questionHolder_AuditQuestion_21_answerHolder_answer182_button']</td>
+<td></td>
+<td>0</td>
+<td>Master@6743e411</td></tr>
+</table><p>
+</body>
+</html>

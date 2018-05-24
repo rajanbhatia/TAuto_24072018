@@ -10,6 +10,7 @@ import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -56,7 +57,7 @@ public class ExcelDataConfig {
 				**/	
 		} 
 		catch (Exception e) {
-			JOptionPane.showMessageDialog(null, e.getMessage());
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Exception",0);
 			System.exit(1);
 			//System.out.println(e.getMessage());
 		}		
@@ -81,8 +82,8 @@ public class ExcelDataConfig {
 		DataFormatter formatter = new DataFormatter(); //creating formatter using the default locale
 		sheetxlsx = wbxlsx.getSheetAt(sheetnumber);
 		cell = sheetxlsx.getRow(row).getCell(column);   //get the value from the cell
-		String data = formatter.formatCellValue(cell);  //Returns the formatted value of a cell as a String regardless of the cell type.
-	
+		String data = formatter.formatCellValue((Cell) cell);  //Returns the formatted value of a cell as a String regardless of the cell type.
+		
 		return data;		
 	}
 	

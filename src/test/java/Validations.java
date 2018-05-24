@@ -27,11 +27,11 @@ public class Validations 		//Class to test all the assertEqual validations, incl
 		}
 		
 		//Attribute Values (e.g. textboxes)
-		public void validateTextboxValueByXpath(WebElement xpath, String validationtext,WebDriver driver)    // xpath validation
+		public void validateTextboxValue(WebElement element, String validationtext,WebDriver driver)    // xpath validation
 		{
-			assertEquals(xpath.getAttribute("value"),validationtext);
+			assertEquals(element.getAttribute("value"),validationtext);
 		}
-		public void validateTextboxValueById(WebElement id, String validationtext,WebDriver driver)   //id validation
+	/**	public void validateTextboxValueById(WebElement id, String validationtext,WebDriver driver)   //id validation
 		{
 			//assertEquals(driver.findElement(By.id(id)).getAttribute("value"),validationtext);
 			assertEquals(id.getAttribute("value"),validationtext);
@@ -44,7 +44,7 @@ public class Validations 		//Class to test all the assertEqual validations, incl
 		{
 			assertEquals(css.getAttribute("value"),validationtext);		
 		}
-		
+		**/
 		//Dropdown
 		public void validateDropdownValueByXpath(WebElement xpath, String validationtext,WebDriver driver)    // xpath validation
 		{

@@ -1,0 +1,40 @@
+Open Browser and go to URL
+Enter Text
+Enter Text
+Click Button
+Select from DropDown
+Click RadioButton
+Click CheckBox
+Sleep (seconds)
+Verify Text
+
+
+
+
+Open 
+Browser: Close
+Browser: Save Attributes (before pop-up window)
+Browser: Switch to new browser (pop-up window)
+Browser: Switch back to old browser
+Button: Validate Text (locator value, test data)
+Caption/Text: Validate Text (locator value, test data)
+Checkbox: Validate if Selected (locator value)
+Do Not Execute This Step
+Dropdown: Select Value (locator value, test data)
+Dropdown: Validate Value (locator value, test data)
+Key: Press (Enter/Return/Tab/Escape) (locator value, test data)
+Object: Click (locator value)
+Object: Validate if Present (locator value)
+
+Pause: Delay Execution in Seconds (test data)
+Radiobutton: Validate if Selected (locator value)
+Textbox: Enter Text (locator value, test data)
+Textbox: Validate Text (locator value, test data)
+
+Execute All TestCases Multiple Times (test data)
+
+
+
+
+
+

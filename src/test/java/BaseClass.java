@@ -32,9 +32,10 @@ public class BaseClass {
 	
 	protected Object preferencesdata[][]=new Object[6][1];
 	protected Boolean exceptionerror;
-	protected String stepdescription, command, stepid;
+	protected String stepdescription, objectName, stepid;
 	protected JFrame f = new JFrame("Starting Test Execution...");
 	protected Boolean multipleExecutionsDifferentTestData=false;
+	
 @BeforeClass(alwaysRun=true)
 public void setUp() throws Exception 
 {		
@@ -69,13 +70,24 @@ public void setUp() throws Exception
 			if (!preferencesdata[2][0].equals("0") && ((String) preferencesdata[2][0]).trim().length() > 0)  	browsername = (String) preferencesdata[2][0];  
 			else								browsername = "Chrome";						//Default browser is Chrome, if none specified
 			//check null report path parameter
-			if (!preferencesdata[3][0].equals("0") && ((String) preferencesdata[3][0]).trim().length() > 0)		executionreportpath = (String) preferencesdata[3][0];
+			if (!preferencesdata[3][0].equals("0") && ((String) preferencesdata[3][0]).trim().length() > 0)		
+			{
+				executionreportpath = (String) preferencesdata[3][0];
+				if (!(executionreportpath.substring(executionreportpath.length()-1).equals("\\")) && executionreportpath.length()>2)  //To cover the case where user doesn't provide '\' in front of the path. In that case screenshots stay in the parent directory 
+				{ 
+						 executionreportpath = executionreportpath+"\\";  
+				}				
+			}
 			else								executionreportpath = "";					//Report path local directory
+			// Check Multiple executions with same data
+		
 			
 			if (!preferencesdata[5][0].equals("0") && ((String) preferencesdata[5][0]).matches("[0-9]+") && ((String) preferencesdata[5][0]).trim().length() > 0 )	
 			{	
 				multipleExecutionsDifferentTestData = true;
 			}
+			ReportScreenshotUtility.GetExtent(executionreportpath);
+			
 			//Setup Logging off - First one seems to be working
 			
 			
@@ -94,12 +106,10 @@ public void setUp() throws Exception
 		///	driver = new ChromeDriver();
 			///driver.get("https://"+app_url); // To open url in browse
 			//report = new ExtentReports(System.getProperty("user.dir")+ propertyconfig.getReportPath()); //Set the HTML Execution Report Path. Putting another parameter TRUE will overwrite the file everytime.
-			ReportScreenshotUtility.GetExtent(executionreportpath);
+	
 			//ReportScreenshotUtility.report.loadConfig(new File(System.getProperty("user.dir")+"/src/main/resources/extent-config.xml")); //Load the config settings frot he report from xml.
 			
-			//driver = new InternetExplorerDriver();
-		    //baseUrl = "http://www.waikato.ac.nz/";
-			//driver = new FirefoxDriver();
+	
 	}
 	else
 	{
@@ -112,8 +122,9 @@ public void setUp() throws Exception
 	@AfterClass(alwaysRun=true)
 	public void tearDown() throws Exception 
 	 {
-		StringBuffer verificationErrors = new StringBuffer();  
-	    if ((driver != null))		driver.quit();
+		StringBuffer verificationErrors = new StringBuffer();
+		
+	    if ((driver != null))		driver.quit();  // For DEBUGGING, Disable it otherwise ENABLE  
 	    String verificationErrorString = verificationErrors.toString();
 	    if (!"".equals(verificationErrorString)) 
 	    {
@@ -141,7 +152,7 @@ public void setUp() throws Exception
 	
 	private void checkLicense()
 	{
-		System.out.println("Date: "+ getCalDate.get(Calendar.MONTH)+"/"+getCalDate.get(Calendar.YEAR));
+		//System.out.println("Date: "+ getCalDate.get(Calendar.MONTH)+"/"+getCalDate.get(Calendar.YEAR));
 		// System.out.println(System.getProperty("user.name")); To check the USERNAME of the machine
 		int dateMon = getCalDate.get(Calendar.MONTH)+1;
 		int dateYear = getCalDate.get(Calendar.YEAR);

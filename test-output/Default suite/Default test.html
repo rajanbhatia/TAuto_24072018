@@ -1,0 +1,414 @@
+<html>
+<head>
+<title>TestNG:  Default test</title>
+<link href="../testng.css" rel="stylesheet" type="text/css" />
+<link href="../my-testng.css" rel="stylesheet" type="text/css" />
+
+<style type="text/css">
+.log { display: none;} 
+.stack-trace { display: none;} 
+</style>
+<script type="text/javascript">
+<!--
+function flip(e) {
+  current = e.style.display;
+  if (current == 'block') {
+    e.style.display = 'none';
+    return 0;
+  }
+  else {
+    e.style.display = 'block';
+    return 1;
+  }
+}
+
+function toggleBox(szDivId, elem, msg1, msg2)
+{
+  var res = -1;  if (document.getElementById) {
+    res = flip(document.getElementById(szDivId));
+  }
+  else if (document.all) {
+    // this is the way old msie versions work
+    res = flip(document.all[szDivId]);
+  }
+  if(elem) {
+    if(res == 0) elem.innerHTML = msg1; else elem.innerHTML = msg2;
+  }
+
+}
+
+function toggleAllBoxes() {
+  if (document.getElementsByTagName) {
+    d = document.getElementsByTagName('div');
+    for (i = 0; i < d.length; i++) {
+      if (d[i].className == 'log') {
+        flip(d[i]);
+      }
+    }
+  }
+}
+
+// -->
+</script>
+
+</head>
+<body>
+<h2 align='center'>Default test</h2><table border='1' align="center">
+<tr>
+<td>Tests passed/Failed/Skipped:</td><td>67/0/0</td>
+</tr><tr>
+<td>Started on:</td><td>Thu May 24 11:20:48 NZST 2018</td>
+</tr>
+<tr><td>Total time:</td><td>100 seconds (100751 ms)</td>
+</tr><tr>
+<td>Included groups:</td><td></td>
+</tr><tr>
+<td>Excluded groups:</td><td></td>
+</tr>
+</table><p/>
+<small><i>(Hover the method name to see the test class name)</i></small><p/>
+<table width='100%' border='1' class='invocation-passed'>
+<tr><td colspan='4' align='center'><b>PASSED TESTS</b></td></tr>
+<tr><td><b>Test method</b></td>
+<td width="30%"><b>Exception</b></td>
+<td width="10%"><b>Time (seconds)</b></td>
+<td><b>Instance</b></td>
+</tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 1, Open Browser, , , https://portsafe-test.cmo-compliance.com/, , , , , , , , , , , , , , , , , , , , , , , </td>
+<td></td>
+<td>6</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 2, Enter Text, Login, Username Textfield, test_automation_ff, , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id='ctl00_mainContent_loginControl_loginNameTextBox']</td>
+<td></td>
+<td>0</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 3, Enter Text, Login, Password Textfield, Welcome2018!, , , , , , , , , , , , , , , , , , , , , , Xpath, //input[@id='ctl00_mainContent_loginControl_passwordTextBox']</td>
+<td></td>
+<td>0</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 4, Click, Login, Login button, , , , , , , , , , , , , , , , , , , , , , , Xpath, //input[@id='ctl00_mainContent_loginControl_loginButton']</td>
+<td></td>
+<td>2</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 5, Click, Dashboard, Form Filler tab, , , , , , , , , , , , , , , , , , , , , , , Xpath, //a[@id='ctl00_ctl00_pagePlaceHolder_dashboardTabs_79e2360c-6f73-497a-9f1a-f305ece655c5']</td>
+<td></td>
+<td>1</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 6, Click, Dashboard, Form Filler > Report Hazard link, , , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id='ctl00_ctl00_pagePlaceHolder_pagePlaceholder_customDashboardControl_columnsRepeater_ctl00_dashboardColumn_widgetRepeater_ctl00_widgetContainer_widget_repeater_ctl01_createObjectNameLabel']</td>
+<td></td>
+<td>0</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 7, Select Text from dropdown, Hazard_Report_Selection, Org Unit dropdown*, Container Terminals, , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id="ctl00_ctl00_dialogHolder_ctl00_ctl00_pagePlaceHolder_pagePlaceholder_customDashboardControl_columnsRepeater_ctl00_dashboardColumn_widgetRepeater_ctl00_widgetContainer_widget_createSelfAssessmentOperation_selectDataForElectronicFormDialog_popupInnerContent_groupDdl_table"]/tbody/tr/td[2]/img</td>
+<td></td>
+<td>3</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 8, Select Text from dropdown, Hazard_Report_Selection, Entity dropdown*, *Container Terminals*, , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id='ctl00_ctl00_dialogHolder_ctl00_ctl00_pagePlaceHolder_pagePlaceholder_customDashboardControl_columnsRepeater_ctl00_dashboardColumn_widgetRepeater_ctl00_widgetContainer_widget_createSelfAssessmentOperation_selectDataForElectronicFormDialog_popupInnerContent_auditeeDdl_table']/tbody/tr/td[2]/img</td>
+<td></td>
+<td>2</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 9, Select Text from dropdown, Hazard_Report_Selection, Vessel dropdown*, *NO VESSEL*, , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id='ctl00_ctl00_dialogHolder_ctl00_ctl00_pagePlaceHolder_pagePlaceholder_customDashboardControl_columnsRepeater_ctl00_dashboardColumn_widgetRepeater_ctl00_widgetContainer_widget_createSelfAssessmentOperation_selectDataForElectronicFormDialog_popupInnerContent_AuditeeTypeAfterAuditeeSelectControl_table']/tbody/tr/td[2]/img</td>
+<td></td>
+<td>2</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 10, Click, Hazard_Report_Selection, Event Date picker, , , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id="ctl00_ctl00_dialogHolder_ctl00_ctl00_pagePlaceHolder_pagePlaceholder_customDashboardControl_columnsRepeater_ctl00_dashboardColumn_widgetRepeater_ctl00_widgetContainer_widget_createSelfAssessmentOperation_selectDataForElectronicFormDialog_popupInnerContent_auditDatePanel_startAuditDateCalendar_dateTextBox"]</td>
+<td></td>
+<td>0</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 11, Select Text from dropdown, Hazard_Report_Selection, Event Date Month dropdown, Apr, , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id="ui-datepicker-div"]/div[1]/div/select[1]</td>
+<td></td>
+<td>0</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 12, Select Text from dropdown, Hazard_Report_Selection, Event Date Year dropdown, 2018, , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id="ui-datepicker-div"]/div[1]/div/select[2]</td>
+<td></td>
+<td>0</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 13, Click, Hazard_Report_Selection, Event Date Day, , , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id="ui-datepicker-div"]/table/tbody/tr[2]/td[3]/a</td>
+<td></td>
+<td>0</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 14, Enter Text, Hazard_Report_Selection, Event Title textfield, Automated Testing Event 50, , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id='ctl00_ctl00_dialogHolder_ctl00_ctl00_pagePlaceHolder_pagePlaceholder_customDashboardControl_columnsRepeater_ctl00_dashboardColumn_widgetRepeater_ctl00_widgetContainer_widget_createSelfAssessmentOperation_selectDataForElectronicFormDialog_popupInnerContent_auditNameTextBox']</td>
+<td></td>
+<td>1</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 15, Click, Hazard_Report_Selection, Ok button, , , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id='ctl00_ctl00_dialogHolder_ctl00_ctl00_pagePlaceHolder_pagePlaceholder_customDashboardControl_columnsRepeater_ctl00_dashboardColumn_widgetRepeater_ctl00_widgetContainer_widget_createSelfAssessmentOperation_selectDataForElectronicFormDialog_btnOK_linkButton']/span</td>
+<td></td>
+<td>0</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 16, Click, Hazard_Report, Commence Hazard Form button, , , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id='ctl00_ctl00_pagePlaceHolder_Content_questionView_0_questionPanel_questionHolder_AuditQuestion_0_answerHolder_answer0_button']</td>
+<td></td>
+<td>1</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 17, Click, Hazard_Report, Hazard Detail > Reported By Someone checkbox, , , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id='ctl00_ctl00_pagePlaceHolder_Content_questionView_1_questionPanel_questionHolder_AuditQuestion_1_answerHolder_answer1']</td>
+<td></td>
+<td>2</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 18, Click, Hazard_Report, Hazard Detail > Contractor radiobutton, , , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id='ctl00_ctl00_pagePlaceHolder_Content_questionView_1_questionPanel_questionHolder_AuditQuestion_1_answerHolder_answer4']</td>
+<td></td>
+<td>0</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 19, Enter Text (textarea), Hazard_Report, Hazard Detail > Description textarea, Hazard Description, , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id='ctl00_ctl00_pagePlaceHolder_Content_questionView_1_questionPanel_questionHolder_AuditQuestion_1_answerHolder_answer15_textArea']</td>
+<td></td>
+<td>3</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 20, Click, Hazard_Report, Location Map > Port Map radiobutton, , , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id='ctl00_ctl00_pagePlaceHolder_Content_questionView_2_questionPanel_questionHolder_AuditQuestion_2_answerHolder_answer16']</td>
+<td></td>
+<td>0</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 21, Click, Hazard_Report, Hazard Location > Fergusson Container Terminal radiobutton, , , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id='ctl00_ctl00_pagePlaceHolder_Content_questionView_5_questionPanel_questionHolder_AuditQuestion_5_answerHolder_answer35']</td>
+<td></td>
+<td>2</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 22, Click, Hazard_Report, Fergusson Specific Location > Berth radiobutton, , , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id='ctl00_ctl00_pagePlaceHolder_Content_questionView_6_questionPanel_questionHolder_AuditQuestion_6_answerHolder_answer48']</td>
+<td></td>
+<td>0</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 23, Click, Hazard_Report, Hazard Classification > Health and Safety checkbox, , , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id='ctl00_ctl00_pagePlaceHolder_Content_questionView_19_questionPanel_questionHolder_AuditQuestion_19_answerHolder_answer163']</td>
+<td></td>
+<td>2</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 24, Click, Hazard_Report, Energy > Human checkbox, , , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id='ctl00_ctl00_pagePlaceHolder_Content_questionView_20_questionPanel_questionHolder_AuditQuestion_20_answerHolder_answer166']</td>
+<td></td>
+<td>2</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 25, Click, Hazard_Report, Hazard Controlled > Yes radiobutton, , , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id='ctl00_ctl00_pagePlaceHolder_Content_questionView_21_questionPanel_questionHolder_AuditQuestion_21_answerHolder_answer178']</td>
+<td></td>
+<td>2</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 26, Click, Hazard_Report, Submit to Supervisor button, , , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id='ctl00_ctl00_pagePlaceHolder_Content_questionView_21_questionPanel_questionHolder_AuditQuestion_21_answerHolder_answer182_button']</td>
+<td></td>
+<td>0</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 27, Select Text from dropdown, Hazard_Report, Select Responsible Reviewer dropdown, Test Automation HS Mgt, , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id="ctl00_ctl00_pagePlaceHolder_Content_dialogHolder_ctl00_ctl00_pagePlaceHolder_Content_operationHolder_icwsAnswerOperation_checkStageResponsiblePartiesOperation_selectResponsiblePartyDialog_popupInnerContent_repeater_ctl00_responsiblePartyDDL"]</td>
+<td></td>
+<td>0</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 28, Click, Hazard_Report, Ok button to select Reviewer, , , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id="ctl00_ctl00_pagePlaceHolder_Content_dialogHolder_ctl00_ctl00_pagePlaceHolder_Content_operationHolder_icwsAnswerOperation_checkStageResponsiblePartiesOperation_selectResponsiblePartyDialog_btnOK_linkButton"]/span</td>
+<td></td>
+<td>0</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 29, Click, Dashboard, User Icon, , , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id='loginbutton']</td>
+<td></td>
+<td>2</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Submit Hazard Report, 30, Click, Dashboard, Home tab, , , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id='ctl00_ctl00_pagePlaceHolder_dashboardTabs_c53552e5-b0bd-42ed-ae52-e261b168b2c6']</td>
+<td></td>
+<td>1</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC001, Review and Approve Hazard Report, 31, Close Browser, , , , , , , , , , , , , , , , , , , , , , , , , , </td>
+<td></td>
+<td>2</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC002, Review and Approve Hazard Report, 1, Open Browser, , , https://portsafe-test.cmo-compliance.com/, , , , , , , , , , , , , , , , , , , , , , , </td>
+<td></td>
+<td>4</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC002, Review and Approve Hazard Report, 2, Enter Text, Login, Username Textfield, test_automation_HS_Mgt, , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id='ctl00_mainContent_loginControl_loginNameTextBox']</td>
+<td></td>
+<td>0</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC002, Review and Approve Hazard Report, 3, Enter Text, Login, Password Textfield, Welcome2018!, , , , , , , , , , , , , , , , , , , , , , Xpath, //input[@id='ctl00_mainContent_loginControl_passwordTextBox']</td>
+<td></td>
+<td>0</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC002, Review and Approve Hazard Report, 4, Click, Login, Login button, , , , , , , , , , , , , , , , , , , , , , , Xpath, //input[@id='ctl00_mainContent_loginControl_loginButton']</td>
+<td></td>
+<td>11</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC002, Review and Approve Hazard Report, 5, Click, Dashboard, Home tab, , , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id='ctl00_ctl00_pagePlaceHolder_dashboardTabs_c53552e5-b0bd-42ed-ae52-e261b168b2c6']</td>
+<td></td>
+<td>6</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC002, Review and Approve Hazard Report, 6, Click, Dashboard, Home > Report Link*, Automated Testing Event 50, , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id='ctl00_ctl00_pagePlaceHolder_pagePlaceholder_customDashboardControl_columnsRepeater_ctl00_dashboardColumn_widgetRepeater_ctl00_widgetContainer_widget_actionDG_actionGrid_ctl02_actionHyperlink']</td>
+<td></td>
+<td>3</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC002, Review and Approve Hazard Report, 7, Browser: Save Attributes (before pop-up window), , , , , , , , , , , , , , , , , , , , , , , , , , </td>
+<td></td>
+<td>0</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC002, Review and Approve Hazard Report, 8, Click, Reviewer_Summary, Report Title hyperlink, , , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id='ctl00_mainContentPlaceHolder_actionReferencePanel_referencePanel_referenceGrid_ctl02_linkTitle']</td>
+<td></td>
+<td>0</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC002, Review and Approve Hazard Report, 9, Browser: Switch to new browser (pop-up window), , , , , , , , , , , , , , , , , , , , , , , , , , </td>
+<td></td>
+<td>0</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC002, Review and Approve Hazard Report, 10, Validate if Checkbox is Selected, Hazard_Report, Hazard Detail > Reported By Someone checkbox, , , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id='ctl00_ctl00_pagePlaceHolder_Content_questionView_1_questionPanel_questionHolder_AuditQuestion_1_answerHolder_answer1']</td>
+<td></td>
+<td>1</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC002, Review and Approve Hazard Report, 11, Validate if Radiobutton is Selected, Hazard_Report, Hazard Detail > Contractor radiobutton, , , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id='ctl00_ctl00_pagePlaceHolder_Content_questionView_1_questionPanel_questionHolder_AuditQuestion_1_answerHolder_answer4']</td>
+<td></td>
+<td>0</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC002, Review and Approve Hazard Report, 12, Pause Execution (specify seconds), , , 2, , , , , , , , , , , , , , , , , , , , , , , </td>
+<td></td>
+<td>2</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC002, Review and Approve Hazard Report, 13, Validate Text in textarea, Hazard_Report, Hazard Detail > Description textarea, Hazard Description, , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id='ctl00_ctl00_pagePlaceHolder_Content_questionView_1_questionPanel_questionHolder_AuditQuestion_1_answerHolder_answer15_textArea']</td>
+<td></td>
+<td>0</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC002, Review and Approve Hazard Report, 14, Validate if Radiobutton is Selected, Hazard_Report, Location Map > Port Map radiobutton, , , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id='ctl00_ctl00_pagePlaceHolder_Content_questionView_2_questionPanel_questionHolder_AuditQuestion_2_answerHolder_answer16']</td>
+<td></td>
+<td>0</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC002, Review and Approve Hazard Report, 15, Validate if Radiobutton is Selected, Hazard_Report, Hazard Location > Fergusson Container Terminal radiobutton, , , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id='ctl00_ctl00_pagePlaceHolder_Content_questionView_5_questionPanel_questionHolder_AuditQuestion_5_answerHolder_answer35']</td>
+<td></td>
+<td>0</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC002, Review and Approve Hazard Report, 16, Validate if Radiobutton is Selected, Hazard_Report, Fergusson Specific Location > Berth radiobutton, , , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id='ctl00_ctl00_pagePlaceHolder_Content_questionView_6_questionPanel_questionHolder_AuditQuestion_6_answerHolder_answer48']</td>
+<td></td>
+<td>0</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC002, Review and Approve Hazard Report, 17, Validate if Checkbox is Selected, Hazard_Report, Hazard Classification > Health and Safety checkbox, , , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id='ctl00_ctl00_pagePlaceHolder_Content_questionView_19_questionPanel_questionHolder_AuditQuestion_19_answerHolder_answer163']</td>
+<td></td>
+<td>0</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC002, Review and Approve Hazard Report, 18, Validate if Checkbox is Selected, Hazard_Report, Energy > Human checkbox, , , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id='ctl00_ctl00_pagePlaceHolder_Content_questionView_20_questionPanel_questionHolder_AuditQuestion_20_answerHolder_answer166']</td>
+<td></td>
+<td>0</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC002, Review and Approve Hazard Report, 19, Validate if Radiobutton is Selected, Hazard_Report, Hazard Controlled > Yes radiobutton, , , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id='ctl00_ctl00_pagePlaceHolder_Content_questionView_21_questionPanel_questionHolder_AuditQuestion_21_answerHolder_answer178']</td>
+<td></td>
+<td>0</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC002, Review and Approve Hazard Report, 20, Click, Hazard_Report, Next button, , , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id='ctl00_ctl00_pagePlaceHolder_Content_sectionNavigation_btnNextSection']</td>
+<td></td>
+<td>0</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC002, Review and Approve Hazard Report, 21, Click, Reviewer_Inputs, Action Assignment > No radio button, , , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id='ctl00_ctl00_pagePlaceHolder_Content_questionView_22_questionPanel_questionHolder_AuditQuestion_22_answerHolder_answer185']</td>
+<td></td>
+<td>0</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC002, Review and Approve Hazard Report, 22, Enter Text (textarea), Reviewer_Inputs, Action Assignment > No Why? Textarea, No action required., , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id='ctl00_ctl00_pagePlaceHolder_Content_questionView_22_questionPanel_questionHolder_AuditQuestion_22_answerHolder_answer186_textArea']</td>
+<td></td>
+<td>1</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC002, Review and Approve Hazard Report, 23, Click, Reviewer_Inputs, Accept Hazard > Yes radio button, , , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id='ctl00_ctl00_pagePlaceHolder_Content_questionView_23_questionPanel_questionHolder_AuditQuestion_23_answerHolder_answer188']</td>
+<td></td>
+<td>0</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC002, Review and Approve Hazard Report, 24, Click, Reviewer_Inputs, Hazard Closed > Yes radio button, , , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id='ctl00_ctl00_pagePlaceHolder_Content_questionView_24_questionPanel_questionHolder_AuditQuestion_24_answerHolder_answer193']</td>
+<td></td>
+<td>0</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC002, Review and Approve Hazard Report, 25, Enter Text (textarea), Reviewer_Inputs, Hazard Closed > Comments textarea, Closing Hazard Comments…, , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id='ctl00_ctl00_pagePlaceHolder_Content_questionView_24_questionPanel_questionHolder_AuditQuestion_24_answerHolder_answer195_textArea']</td>
+<td></td>
+<td>1</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC002, Review and Approve Hazard Report, 26, Click, Reviewer_Inputs, Complete Hazard button, , , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id='ctl00_ctl00_pagePlaceHolder_Content_questionView_24_questionPanel_questionHolder_AuditQuestion_24_answerHolder_answer196_button']</td>
+<td></td>
+<td>0</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC002, Review and Approve Hazard Report, 27, Switch back to old browser, , , , , , , , , , , , , , , , , , , , , , , , , , </td>
+<td></td>
+<td>0</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC002, Review and Approve Hazard Report, 28, Click, Reviewer_Summary, Back button, , , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id='ctl00_recordMenuContentPlaceHolder_btnBack']/span</td>
+<td></td>
+<td>0</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC002, Review and Approve Hazard Report, 29, Click, Dashboard, User Icon, , , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id='loginbutton']</td>
+<td></td>
+<td>6</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC002, Review and Approve Hazard Report, 30, Click, Dashboard, User Icon > Logout button, , , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id='ctl00_ctl00_pagePlaceHolder_header_logoutButton']</td>
+<td></td>
+<td>0</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC002, Review and Approve Hazard Report, 31, Enter Text, Login, Username Textfield, test_automation_ff, , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id='ctl00_mainContent_loginControl_loginNameTextBox']</td>
+<td></td>
+<td>0</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC002, Review and Approve Hazard Report, 32, Enter Text, Login, Password Textfield, Welcome2018!, , , , , , , , , , , , , , , , , , , , , , Xpath, //input[@id='ctl00_mainContent_loginControl_passwordTextBox']</td>
+<td></td>
+<td>0</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC002, Review and Approve Hazard Report, 33, Click, Login, Login button, , , , , , , , , , , , , , , , , , , , , , , Xpath, //input[@id='ctl00_mainContent_loginControl_loginButton']</td>
+<td></td>
+<td>1</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC002, Review and Approve Hazard Report, 34, Click, Dashboard, Form Filler tab, , , , , , , , , , , , , , , , , , , , , , , Xpath, //a[@id='ctl00_ctl00_pagePlaceHolder_dashboardTabs_79e2360c-6f73-497a-9f1a-f305ece655c5']</td>
+<td></td>
+<td>1</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC002, Review and Approve Hazard Report, 35, Validate if Object is Present in the table view, Dashboard, Form Filler > Reported Hazard Status Closed*, Automated Testing Event 50, , , , , , , , , , , , , , , , , , , , , , Xpath, //*[@id='ctl00_ctl00_pagePlaceHolder_pagePlaceholder_customDashboardControl_columnsRepeater_ctl01_dashboardColumn_widgetRepeater_ctl01_widgetContainer_widget_auditDG_auditGrid']/tbody</td>
+<td></td>
+<td>0</td>
+<td>Master@396f6598</td></tr>
+<tr>
+<td title='Master.main()'><b>main</b><br>Test class: Master<br>Parameters: TC002, Review and Approve Hazard Report, 36, Close Browser, , , , , , , , , , , , , , , , , , , , , , , , , , </td>
+<td></td>
+<td>2</td>
+<td>Master@396f6598</td></tr>
+</table><p>
+</body>
+</html>

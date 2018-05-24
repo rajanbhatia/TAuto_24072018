@@ -7,7 +7,7 @@
     </classes>  
     
   </test> <!-- Test -->
-  <!-- listeners>
+  <!-- >listeners>
     	<listener class-name="Master" />
   </listeners-->
 </suite> <!-- Suite -->
