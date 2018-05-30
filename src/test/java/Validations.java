@@ -9,11 +9,11 @@ import org.openqa.selenium.support.ui.Select;
 public class Validations 		//Class to test all the assertEqual validations, including getAttribute("values")
 {   
 	// e.g. captions
-		public void validateCaptionByXpath(WebElement xpath, String validationtext, WebDriver driver)    // xpath validation
+		public void validateCaption(WebElement element, String validationtext, WebDriver driver)    // xpath validation
 		{
-			assertEquals(xpath.getText(),validationtext);
+			assertEquals(element.getText(),validationtext);
 		}
-		public void validateCaptionById(WebElement id, String validationtext,WebDriver driver)   //id validation
+	/**	public void validateCaptionById(WebElement id, String validationtext,WebDriver driver)   //id validation
 		{
 			assertEquals(id.getText(),validationtext);
 		}
@@ -25,7 +25,7 @@ public class Validations 		//Class to test all the assertEqual validations, incl
 		{
 			assertEquals(css.getText(),validationtext);
 		}
-		
+		**/
 		//Attribute Values (e.g. textboxes)
 		public void validateTextboxValue(WebElement element, String validationtext,WebDriver driver)    // xpath validation
 		{
@@ -46,11 +46,11 @@ public class Validations 		//Class to test all the assertEqual validations, incl
 		}
 		**/
 		//Dropdown
-		public void validateDropdownValueByXpath(WebElement xpath, String validationtext,WebDriver driver)    // xpath validation
+		public void validateDropdownValue(WebElement element, String validationtext,WebDriver driver)    // xpath validation
 		{
-			 assertEquals(new Select(xpath).getFirstSelectedOption().getText(), validationtext);	  // To get the selected dropdown value		
+			 assertEquals(new Select(element).getFirstSelectedOption().getText(), validationtext);	  // To get the selected dropdown value		
 		}
-		public void validateDropdownValueById(WebElement id, String validationtext,WebDriver driver)   //id validation
+/**		public void validateDropdownValueById(WebElement id, String validationtext,WebDriver driver)   //id validation
 		{
 			assertEquals(new Select(id).getFirstSelectedOption().getText(), validationtext);	  // To get the selected dropdown value
 		}
@@ -62,7 +62,7 @@ public class Validations 		//Class to test all the assertEqual validations, incl
 		{
 			assertEquals(new Select(css).getFirstSelectedOption().getText(), validationtext);	  // To get the selected dropdown value
 		}
-	
+	**/
 	
 	
 	

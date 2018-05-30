@@ -10,9 +10,7 @@ import java.util.Set;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.Platform;
 import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -24,7 +22,6 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.ie.InternetExplorerOptions;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -33,7 +30,6 @@ import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.ITestAnnotation;
-import org.testng.IAnnotationTransformer;
 import org.testng.annotations.Test;
 import com.relevantcodes.extentreports.LogStatus;
 
@@ -48,7 +44,7 @@ public class Master extends BaseClass implements IAnnotationTransformer
 	int counter =0; //to count if 3 objects are not found together in 3 steps than change the Explicit wait time period for that specific test case
 	
 @Test(dataProvider = "TestSteps")//, threadPoolSize=2)		//, invocationCount=invocationcount) //invocationCount set at run time
-public void main(String tcid, String tc_desc, String stepid, String step_desc, String page, String object, String testdata, String a1,String a2, String a3,String a4, String a5,String a6, String a7,String a8, String a9,String a10, String a11, String locatortype, String locatorvalue) //, String result, String error)
+public void main(String tcid, String tc_desc, String stepid, String step_desc, String page, String object, String testdata, String a1,String a2, String a3,String a4, String a5,String a6, String a7,String a8, String a9, String locatortype, String locatorvalue) //, String result, String error)
 {	
 	try
 	{			
@@ -93,6 +89,23 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 							break;						
 					case "Firefox":
 							//FirefoxDriverManager.getInstance().setup();
+						FirefoxOptions optionsF = new FirefoxOptions();
+						optionsF.addPreference("browser.link.open_newwindow.restriction", 0);  //To avoid opening a new window. After Implementation, it is still opening but working with the SaveAttributes command (window driver handles)
+						/**
+						 * B) browser.link.open_newwindow.restriction - for links in Firefox tabs
+
+									0 = apply the setting under (A (open_newwindow) to ALL new windows (even script windows) <= Try this one
+									2 = apply the setting under (A) to normal windows, but NOT to script windows with features (default)
+									1 = override the setting under (A) and always use new windows**/
+						 
+						optionsF.addPreference("browser.link.open_newwindow", 1);
+						
+						/**(A) browser.link.open_newwindow - for links in Firefox tabs
+
+						3 = divert new window to a new tab (default) <= This should already be set; if it's not, right-click > Reset to restore the default
+						2 = allow link to open a new window
+						1 = force new window into same tab **/
+						
 						System.setProperty("webdriver.firefox.bin", "C:\\Users\\bh6877\\AppData\\Local\\Mozilla Firefox\\firefox.exe");
 						System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir")+"/drivers/geckodriver.exe");  //gecko is required for Selenium 3
 							//System.setProperty("webdriver.chrome.driver", "C:\\firefoxdriver.exe");
@@ -297,13 +310,13 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 				break;
 			}
 			
-			case "Validate Text (Caption)": 
+			case "Validate Text (caption)": 
 			{
 				checkLocParamBlankValues(locatorValue, testdata);  //check null or blank values and set the exceptionerror and exceptionmessage text.
 				if (!exceptionerror) //Execute it only if the values are valid
 				{
 					findElement();
-					validation.validateCaptionById(element, testdata, driver);
+					validation.validateCaption(element, testdata, driver);
 				/**	switch (locatortype)
 					{
 						case "ID": validation.validateCaptionById(elementId, testdata, driver);
@@ -364,13 +377,13 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 				break;
 			}
 			
-			case "Validate Value (Dropdown)": 
+			case "Validate Text in dropdown": 
 			{
 				checkLocParamBlankValues(locatorValue, testdata);  //check null or blank values and set the exceptionerror and exceptionmessage text.
 				if (!exceptionerror)  //Execute it only if the values are valid
 				{
 					findElement();
-					validation.validateDropdownValueById(element, testdata, driver);
+					validation.validateDropdownValue(element, testdata, driver);
 					/**
 					switch (locatortype)
 					{
@@ -391,7 +404,7 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 				}
 				break;
 			}
-			case "Validate Text (Button)": 
+			case "Validate Text of button": 
 			{
 				checkLocParamBlankValues(locatorValue, testdata);  //check null or blank values and set the exceptionerror and exceptionmessage text.
 				if (!exceptionerror)  //Execute it only if the values are valid
@@ -420,6 +433,7 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 			}
 			//case "Object: Click (locator value)":
 			case "Click":
+			case "Click on hyperlink":	
 			{
 				checkLocBlankValue(locatorValue);  //check null or blank values and set the exceptionerror and exceptionmessage text.
 				if (!exceptionerror) //Execute it only if the values are valid
@@ -429,13 +443,22 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 				    	(new WebDriverWait(driver, 15)).until(ExpectedConditions.elementToBeClickable(element));  //checks if element is visible and clickable 
 				       //if (element.isDisplayed() && element.isEnabled()) {
 				    ///	//POAL Specific Block Begins/////////////
-						if (object.equals("Home > Report Link*"))
+					/**	if (object.equals("Report Title hyperlink"))
 						{					
+							Actions actions = new Actions(driver);
+                            actions.keyDown(protractor.Key.SHIFT)
+                            .click(driver.findElement(By.linkText(testdata)))
+                            .keyUp(protractor.Key.SHIFT)
+                            .perform();
 							//selectSubmittedHazardReport(testdata);
-							driver.findElement(By.linkText(testdata+" - Review Hazard")).click();
+							//driver.findElement(By.linkText(testdata+" - Review Hazard")).click();
+						}**/ 
+						//////		//POAL Specific Block Ends/////////////
+						if (stepdescription.equals("Click on hyperlink"))
+						{
+							driver.findElement(By.linkText(testdata)).click();
 						}
-									
-			//////		//POAL Specific Block Ends/////////////
+
 						else
 						{
 				    		
@@ -554,7 +577,7 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 				}
 				break;
 			}
-			
+		//POAL///	
 			case "Validate if Object is Present in the table view":
 			{
 				checkLocBlankValue(locatorValue);  //check null or blank values and set the exceptionerror and exceptionmessage text.
@@ -606,7 +629,7 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 				}
 				break;
 			}
-			
+			//POAL///			
 						
 			/**case "DateFormat_Change (dd/MMM/yyyy)":
 			{
@@ -668,14 +691,14 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 				/// DO Nothing
 				break;
 			}	
-			case "Browser: Save Attributes (before pop-up window)":
+			case "Browser: Save Attributes (before new window)":
 			{
 				winhandlebefore = driver.getWindowHandle(); 
 				// get all the window handles before the popup window appears
 				beforepopup = driver.getWindowHandles();
 				break;
 			}
-			case "Browser: Switch to new browser (pop-up window)":
+			case "Browser: Switch to new window":
 			{
 				// get all the window handles after the popup window appears
 				Set<String> afterPopup = driver.getWindowHandles();
@@ -690,7 +713,7 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 				}	    
 				break;
 			}
-			case "Switch back to old browser":
+			case "Browser: Switch back to old window":
 			{
 				driver.close();
 				driver.switchTo().window(winhandlebefore); 
@@ -789,7 +812,9 @@ public void tearD(ITestResult result) throws Exception
 		logger.log(LogStatus.SKIP, "Step ID: "+stepid+", Step Desc: "+stepdescription+", Object: "+ objectName+": SKIPPED.", result.getThrowable());
 	 }		
 		// ReportScreenshotUtility.report.endTest(logger);
+	 	
 		 ReportScreenshotUtility.report.flush();
+		 //ReportScreenshotUtility.report.
 		
 }
 
