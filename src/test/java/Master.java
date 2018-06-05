@@ -208,6 +208,7 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 		case "Enter Text":
 		case "Enter Text (auto parameterise)":
 			{	
+							
 				checkLocParamBlankValues(locatorValue, testdata);  //check null or blank values and set the exceptionerror and exceptionmessage text.
 				if (!exceptionerror)  //Execute it only if the values are valid
 				{
@@ -605,11 +606,37 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 						/**	List<WebElement> tableCells= driver.findElements(By.xpath(locatorValue+"/tr/td"));  //Get All The Cell Values
 							for(WebElement cell : tableCells) {
 								System.out.println(cell.getText());
+								System.out.println("Xpath"+driver.findElement(By.name(cell.getText())).getAttribute("xpath"));
 							    if(cell.getText().equals(testdata));
 							    {
 							    	driver.findElement(By.linkText(testdata)).click();
 							    }
-							}**/
+							}
+							METHOD to get XPATH of childelements
+							private String generateXPATH(WebElement childElement, String current) {
+							    String childTag = childElement.getTagName();
+							    if(childTag.equals("html")) {
+							        return "/html[1]"+current;
+							    }
+							    WebElement parentElement = childElement.findElement(By.xpath("..")); 
+							    List<WebElement> childrenElements = parentElement.findElements(By.xpath("*"));
+							    int count = 0;
+							    for(int i=0;i<childrenElements.size(); i++) {
+							        WebElement childrenElement = childrenElements.get(i);
+							        String childrenElementTag = childrenElement.getTagName();
+							        if(childTag.equals(childrenElementTag)) {
+							            count++;
+							        }
+							        if(childElement.equals(childrenElement)) {
+							            return generateXPATH(parentElement, "/" + childTag + "[" + count + "]"+current);
+							        }
+							    }
+							    return null;
+							}
+							
+							
+							*
+							**/
 							
 					//		System.out.println("Table Value"+ driver.findElement(By.xpath(locatorValue)).getText());
 							//WebElement t = driver.findElement(By.xpath(locatorValue+"[contains(text(),'"+testdata+"')]"));
@@ -814,6 +841,7 @@ public void tearD(ITestResult result) throws Exception
 		// ReportScreenshotUtility.report.endTest(logger);
 	 	
 		 ReportScreenshotUtility.report.flush();
+		 
 		 //ReportScreenshotUtility.report.
 		
 }

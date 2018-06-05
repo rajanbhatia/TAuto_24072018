@@ -1,6 +1,8 @@
 import java.awt.BorderLayout;
 import java.awt.Container;
+
 import java.util.Calendar;
+import java.util.Date;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
@@ -14,6 +16,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
 import com.relevantcodes.extentreports.ExtentTest;
+
 
 
 public class BaseClass {
@@ -131,7 +134,7 @@ public void setUp() throws Exception
 	      AssertJUnit.fail(verificationErrorString);
 	    }
 	    
-	    //ReportScreenshotUtility.report.flush();   
+	    ReportScreenshotUtility.report.close();   
 	  }
 
 	public void progressBar()
@@ -152,11 +155,34 @@ public void setUp() throws Exception
 	
 	private void checkLicense()
 	{
+		//PublicServer GetDateTime
+		
+		Date serverDate = (PublicServerTime.getNTPDate());
+		if(serverDate == null) 
+		{
+			JFrame frame = new JFrame("JOptionPane showMessageDialog example");
+		    JOptionPane.showMessageDialog(frame,
+		        "Problem with license authentication. Please contact the vendor.");
+		  	System.exit(0);
+		}
+				
+				
+		@SuppressWarnings("deprecation")
+		int dateMon = serverDate.getMonth()+1;
+		@SuppressWarnings("deprecation")
+		int dateYear =  serverDate.getYear()+1900;   //getYear gives currentyear-1900
+		//System.out.println(dateMon + " " + dateYear);
+		
+		
+	//Local Machine GetDateTime	
 		//System.out.println("Date: "+ getCalDate.get(Calendar.MONTH)+"/"+getCalDate.get(Calendar.YEAR));
 		// System.out.println(System.getProperty("user.name")); To check the USERNAME of the machine
-		int dateMon = getCalDate.get(Calendar.MONTH)+1;
-		int dateYear = getCalDate.get(Calendar.YEAR);
-		if (dateMon >= 2 && dateYear >= 2019)	
+	
+		//	int dateMon = getCalDate.get(Calendar.MONTH)+1;
+		//	int dateYear = getCalDate.get(Calendar.YEAR);
+		
+		//Common code to validate
+		if (dateMon >= 7 && dateYear >= 2019)	// Feb 2019
 			{
 				System.out.println("License Expired");
 				JFrame frame = new JFrame("JOptionPane showMessageDialog example");
