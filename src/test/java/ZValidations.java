@@ -6,13 +6,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
 
-public class Validations 		//Class to test all the assertEqual validations, including getAttribute("values")
+public class ZValidations
 {   
 	// e.g. captions
-		public void validateCaption(WebElement element, String validationtext, WebDriver driver)    // xpath validation
-		{
-			assertEquals(element.getText(),validationtext);
-		}
+//		public void validateCaption(WebElement element, String validationtext, WebDriver driver)    // xpath validation
+//		{
+//			assertEquals(element.getText(),validationtext);
+//		}
 	/**	public void validateCaptionById(WebElement id, String validationtext,WebDriver driver)   //id validation
 		{
 			assertEquals(id.getText(),validationtext);
@@ -27,10 +27,10 @@ public class Validations 		//Class to test all the assertEqual validations, incl
 		}
 		**/
 		//Attribute Values (e.g. textboxes)
-		public void validateTextboxValue(WebElement element, String validationtext,WebDriver driver)    // xpath validation
-		{
-			assertEquals(element.getAttribute("value"),validationtext);
-		}
+//		public void validateTextboxValue(WebElement element, String validationtext,WebDriver driver)    // xpath validation
+//		{
+//			assertEquals(element.getAttribute("value"),validationtext);
+//		}
 	/**	public void validateTextboxValueById(WebElement id, String validationtext,WebDriver driver)   //id validation
 		{
 			//assertEquals(driver.findElement(By.id(id)).getAttribute("value"),validationtext);
@@ -46,10 +46,10 @@ public class Validations 		//Class to test all the assertEqual validations, incl
 		}
 		**/
 		//Dropdown
-		public void validateDropdownValue(WebElement element, String validationtext,WebDriver driver)    // xpath validation
-		{
-			 assertEquals(new Select(element).getFirstSelectedOption().getText(), validationtext);	  // To get the selected dropdown value		
-		}
+//		public void validateDropdownValue(WebElement element, String validationtext,WebDriver driver)    // xpath validation
+//		{
+//			 assertEquals(new Select(element).getFirstSelectedOption().getText(), validationtext);	  // To get the selected dropdown value		
+//		}
 /**		public void validateDropdownValueById(WebElement id, String validationtext,WebDriver driver)   //id validation
 		{
 			assertEquals(new Select(id).getFirstSelectedOption().getText(), validationtext);	  // To get the selected dropdown value

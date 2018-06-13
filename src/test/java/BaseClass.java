@@ -1,6 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Container;
-
+import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.LogManager;
@@ -24,16 +24,16 @@ public class BaseClass {
 	Calendar getCalDate = Calendar.getInstance();
 		
 	protected WebDriver driver;
-	protected InputText input_text =  new InputText();
+	//protected InputText input_text =  new InputText();
 	////Clicks click =  new Clicks();
 	//SelectDropdown selectdropdown = new SelectDropdown();
-	protected Validations validation= new Validations();
+	//protected Validations validation= new Validations();
 	protected KeyPress keypress = new KeyPress();
 	protected ExtentTest logger;	//Main class to generate the Logs and add to the report
-	protected String executionreportpath, errormessage, testcasepath, browsername;;
+	protected String executionreportpath, errormessage, testcasepath, browsername, sheetName, preferencesSheetName;
 	protected int sheetnumber, invocationcount;	//invcationcount to run multiple times for same set of test data
 	
-	protected Object preferencesdata[][]=new Object[6][1];
+	protected Object preferencesdata[][]=new Object[4][1];
 	protected Boolean exceptionerror;
 	protected String stepdescription, objectName, stepid;
 	protected JFrame f = new JFrame("Starting Test Execution...");
@@ -43,49 +43,57 @@ public class BaseClass {
 public void setUp() throws Exception 
 {		
 	checkLicense();  // Set the date before distributing in this method.
-		
+	testcasepath = InvokeMaster.sheetDirPathAndName; 
+	sheetName = "TestCases";
+	preferencesSheetName = "Control"; //Mention it here also	
+	
 	progressBar(); // Call the Progress Bar code
 	f.setVisible(true); //Display the Progress Bar
 	LogManager.getLogManager().reset();
 	Logger globalLogger = Logger.getLogger(java.util.logging.Logger.GLOBAL_LOGGER_NAME);
-	globalLogger.setLevel(java.util.logging.Level.OFF);	
-	ExcelDataConfig excelreadpreferences = new ExcelDataConfig(System.getProperty("user.dir")+"/Preferences.xlsx",0);	
+	globalLogger.setLevel(java.util.logging.Level.OFF);
+	
+	//ExcelDataConfig excelreadpreferences = new ExcelDataConfig(System.getProperty("user.dir")+"/Preferences.xlsm",preferencesSheetName);	
+	ExcelDataConfig excelreadpreferences = new ExcelDataConfig(testcasepath,preferencesSheetName);
 	//preferencesdata = new Object[5][1];
-	for(int i=0;i<6;i++)   //Initializing Array to rows-1. First row is just headings and make sure every column cell has a text
+	for(int i=0;i<4;i++)   //Initializing Array to rows-1. First row is just headings and make sure every column cell has a text
 	{
 		for(int j=0;j<1;j++)  //Columns value is one more than the index so less than sign
 		{
-			preferencesdata[i][j]=excelreadpreferences.getData(0, i+1, j+1);  //Picking data from the 2nd row in excel sheet, so i+1
+			preferencesdata[i][j]=excelreadpreferences.getData(preferencesSheetName, i+1, j+1);  //Picking data from the 2nd row in excel sheet, so i+1 and also 2nd column
 		}					
 	}
-	if (((String) preferencesdata[0][0]).trim().length() > 0) //check there is at least one character
-	{
-			testcasepath = (String) preferencesdata[0][0];
-			
-			if (((String) preferencesdata[1][0]).matches("[0-9]+") && ((String) preferencesdata[1][0]).trim().length() > 0)	//check for integer values only
+//	if (((String) preferencesdata[0][0]).trim().length() > 0) //check there is at least one character
+//	{
+			//testcasepath = InvokeMaster.sheetDirPath;   //(String) preferencesdata[0][0];
+			//sheetName = "TestCases";  //FiXING it, so below block code not required
+		/**	if (((String) preferencesdata[1][0]).matches("[0-9]+") && ((String) preferencesdata[1][0]).trim().length() > 0)	//check for integer values only
 			{
 				sheetnumber =  Integer.parseInt((String) preferencesdata[1][0]);
 			}
 			else	sheetnumber = 0; 	// default is 0			
-			
+			**/
 				
 			//check null chrome browser parameter
-			if (!preferencesdata[2][0].equals("0") && ((String) preferencesdata[2][0]).trim().length() > 0)  	browsername = (String) preferencesdata[2][0];  
+			if (!preferencesdata[0][0].equals("0") && ((String) preferencesdata[0][0]).trim().length() > 0)  	browsername = (String) preferencesdata[0][0];  
 			else								browsername = "Chrome";						//Default browser is Chrome, if none specified
 			//check null report path parameter
-			if (!preferencesdata[3][0].equals("0") && ((String) preferencesdata[3][0]).trim().length() > 0)		
+			if (!preferencesdata[1][0].equals("0") && ((String) preferencesdata[1][0]).trim().length() > 0)		
 			{
-				executionreportpath = (String) preferencesdata[3][0];
+				executionreportpath = (String) preferencesdata[1][0];
 				if (!(executionreportpath.substring(executionreportpath.length()-1).equals("\\")) && executionreportpath.length()>2)  //To cover the case where user doesn't provide '\' in front of the path. In that case screenshots stay in the parent directory 
 				{ 
 						 executionreportpath = executionreportpath+"\\";  
 				}				
 			}
-			else								executionreportpath = "";					//Report path local directory
+			else		executionreportpath = InvokeMaster.sheetDirPath;					//Report path local sheet directory
 			// Check Multiple executions with same data
 		
+			executionreportpath = createReportDirectory(executionreportpath);
 			
-			if (!preferencesdata[5][0].equals("0") && ((String) preferencesdata[5][0]).matches("[0-9]+") && ((String) preferencesdata[5][0]).trim().length() > 0 )	
+			
+				
+			if (!preferencesdata[3][0].equals("0") && ((String) preferencesdata[3][0]).matches("[0-9]+") && ((String) preferencesdata[3][0]).trim().length() > 0 )	
 			{	
 				multipleExecutionsDifferentTestData = true;
 			}
@@ -113,14 +121,14 @@ public void setUp() throws Exception
 			//ReportScreenshotUtility.report.loadConfig(new File(System.getProperty("user.dir")+"/src/main/resources/extent-config.xml")); //Load the config settings frot he report from xml.
 			
 	
-	}
-	else
-	{
+//	}
+//	else
+//	{
 		//System.out.println("Invalid or unspecified test case path");
-		JOptionPane.showMessageDialog(null, "Test Case path not specified in the Preferences sheet.");
-		System.exit(1);
+//		JOptionPane.showMessageDialog(null, "Test Case path not specified in the Preferences sheet.");
+//		System.exit(1);
 		
-	}
+//	}
 }
 	@AfterClass(alwaysRun=true)
 	public void tearDown() throws Exception 
@@ -133,8 +141,13 @@ public void setUp() throws Exception
 	    {
 	      AssertJUnit.fail(verificationErrorString);
 	    }
+	    ReportScreenshotUtility.report.flush();	    
+	    ReportScreenshotUtility.report.endTest(logger);
+	    ReportScreenshotUtility.report.close();
+	    //ReportScreenshotUtility.report.close(); It's causing error -  Close was called before test could end safely using EndTest.
 	    
-	    ReportScreenshotUtility.report.close();   
+	    //super.getReport().endTest(super.getLogger());
+	    //super.getReport().flush();
 	  }
 
 	public void progressBar()
@@ -190,6 +203,27 @@ public void setUp() throws Exception
 			        "License Expired. Please contact the vendor.");
 			  	System.exit(0);
 			}
+	}
+	
+	public String createReportDirectory(String path)
+	{
+		String date, month, hour, min, sec;
+		date = Integer.toString(getCalDate.get(Calendar.DAY_OF_MONTH));
+		month = Integer.toString((getCalDate.get(Calendar.MONTH))+1);
+		hour = Integer.toString(getCalDate.get(Calendar.HOUR_OF_DAY));
+		min = Integer.toString(getCalDate.get(Calendar.MINUTE));
+		sec = Integer.toString(getCalDate.get(Calendar.SECOND));
+		
+		if(date.length()==1) date = "0"+date;
+		if(month.length()==1) month = "0"+month;		
+		if(hour.length()==1) hour = "0"+hour;
+		if(min.length()==1) min = "0"+min;
+		if(sec.length()==1) sec = "0"+sec;
+		
+		path = executionreportpath+"\\"+date+month+getCalDate.get(Calendar.YEAR)+"_"+hour+min+sec+"\\";
+		
+		if(new File(path).mkdirs())	 return path;		// Create directory/folder. If successful then path is that folder
+		else return executionreportpath;
 	}
 	
 	

@@ -8,7 +8,7 @@
           <include name="setUp"/>
           <include name="tearD"/>
           <include name="tearDown"/>
-          <include name="main" invocation-numbers="40"/>
+          <include name="main"/>
         </methods>
       </class> <!-- Master -->
     </classes>

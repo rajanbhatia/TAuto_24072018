@@ -2,7 +2,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 
-public class InputText {				//Enter text in text boxes
+public class ZInputText {				//Enter text in text boxes
 	
 	public void textboxXpathEnterText(String xpath, String text, WebDriver driver)   
 	{

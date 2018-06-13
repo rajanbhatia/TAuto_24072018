@@ -35,7 +35,7 @@ import com.relevantcodes.extentreports.LogStatus;
 
 public class Master extends BaseClass implements IAnnotationTransformer
 {
-
+	Boolean allRowBlank;
 	Set<String> beforepopup;
 	String winhandlebefore;
 	String locatorType, locatorValue;
@@ -44,12 +44,13 @@ public class Master extends BaseClass implements IAnnotationTransformer
 	int counter =0; //to count if 3 objects are not found together in 3 steps than change the Explicit wait time period for that specific test case
 	
 @Test(dataProvider = "TestSteps")//, threadPoolSize=2)		//, invocationCount=invocationcount) //invocationCount set at run time
-public void main(String tcid, String tc_desc, String stepid, String step_desc, String page, String object, String testdata, String a1,String a2, String a3,String a4, String a5,String a6, String a7,String a8, String a9, String locatortype, String locatorvalue) //, String result, String error)
+public void main(String tcid, String tc_desc, String stepid, String step_desc, String page, String object, String testdata, String executeFlag,String a2, String a3,String a4, String a5,String a6, String a7,String a8, String a9, String locatortype, String locatorvalue) //, String result, String error)
 {	
 	try
 	{			
 		//logger = ReportScreenshotUtility.report.startTest("Automation Run: Testcase- "+tcid+", Teststep- "+stepid);  //To log every step on the left panel
 		exceptionerror=false;	   //ExceptionError flag to capture errors and log to the logger report   
+		allRowBlank=false;  //To check the entire row blank
 		stepdescription=step_desc;
 		objectName = object;
 		this.stepid=stepid;
@@ -57,37 +58,39 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 		locatorValue = locatorvalue;
 		//this.command=command;
 		
-		
+		if(executeFlag.equalsIgnoreCase("N")) {	stepdescription="Not Executing";		}   //Do not execute this test case step
 		//Auto parameterise test data every time for the textbox enter commands only.
-		if (((multipleExecutionsDifferentTestData) && (stepdescription.equals("Enter Text"))) || (stepdescription.equals("Enter Text (auto parameterise)")))
+		if (((multipleExecutionsDifferentTestData) && (stepdescription.equalsIgnoreCase("Enter Text"))) || (stepdescription.equalsIgnoreCase("Enter Text (auto parameterise)")))
 		{
 				Calendar cal = Calendar.getInstance();
 				testdata=mData(testdata, cal);
 		}
 		
 		//Check explicitly for every Web Element presence
-		if (!locatorType.trim().equals("") && !locatorType.equals(null))
+		if (!locatorType.trim().equals("") && !locatorType.equals(null) && !stepdescription.equalsIgnoreCase("Not Executing"))
 		{
+			findElement();		/////No need to call first when it's being called before the main operation in all the cases. But now Element Check is not happening in the beginning so do it before counter=0; otherwise it will always be 0	
 			counter=0;	//reset to 0, if object is found
 			wait = new WebDriverWait(driver, 15); // Reset to 10 seconds explicit wait, if got changed during 3 NotVisible exceptions
-			findElement();		/////No need to call first when it's being called before the main operation in all the cases	
+			
 		}		    
 		
 		//System.out.println(tcid + " " + tc_desc + " " + stepid + " " + step_desc + " " + command  + " " + locatortype  + " " + locatorvalue + " " + testdata + " " + "\n");
-		switch (stepdescription)
+		switch (stepdescription.toUpperCase())
 		{
 			//case "Browser: Open (specify link under Test Data column)": 
-		case "Open Browser":
+		case "OPEN BROWSER":
 			{
+				if (logger != null)	  ReportScreenshotUtility.report.endTest(logger);  // close it for second run
 				logger = ReportScreenshotUtility.report.startTest("Automation Run: Testcase- "+tcid+"("+tc_desc+")"); //To log every testcase on the left panel and teststeps on the right.
 				//browserSettings(driver, testdata);
-				switch(browsername)
+				switch(browsername.toUpperCase())
 				{
-					case "Chrome":			
-							System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+"/drivers/chromedriver.exe");
+					case "CHROME":			
+							System.setProperty("webdriver.chrome.driver", "C:/QAT/drivers/chromedriver.exe");
 							driver = new ChromeDriver();							
 							break;						
-					case "Firefox":
+					case "FIREFOX":
 							//FirefoxDriverManager.getInstance().setup();
 						FirefoxOptions optionsF = new FirefoxOptions();
 						optionsF.addPreference("browser.link.open_newwindow.restriction", 0);  //To avoid opening a new window. After Implementation, it is still opening but working with the SaveAttributes command (window driver handles)
@@ -107,7 +110,10 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 						1 = force new window into same tab **/
 						
 						System.setProperty("webdriver.firefox.bin", "C:\\Users\\bh6877\\AppData\\Local\\Mozilla Firefox\\firefox.exe");
-						System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir")+"/drivers/geckodriver.exe");  //gecko is required for Selenium 3
+						System.setProperty("webdriver.gecko.driver", "C:/QAT/drivers/geckodriver.exe");  //gecko is required for Selenium 3
+						
+						
+						//System.setProperty("webdriver.gecko.driver", InvokeMaster.sheetDirPath+"/drivers/geckodriver.exe");  //gecko is required for Selenium 3
 							//System.setProperty("webdriver.chrome.driver", "C:\\firefoxdriver.exe");
 						driver = new FirefoxDriver();
 							
@@ -122,7 +128,7 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 							
 							
 							break;						
-					case "Internet Explorer":	// 64-bit types slowly in the textfields so use 32-bit					
+					case "INTERNET EXPLORER":	// 64-bit types slowly in the textfields so use 32-bit					
 							/** DEPRECATED DesiredCapabilities capabilities = DesiredCapabilities.internetExplorer(); // To speed up IE. If not use 32 bit driver
 							capabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
 							capabilities.setCapability(InternetExplorerDriver.REQUIRE_WINDOW_FOCUS, true);
@@ -142,18 +148,20 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 							
 							//options.setCapability(InternetExplorerDriver.IE_ENSURE_CLEAN_SESSION, true);
 							options.setCapability("IgnoringProtectedModeSettings",true);
-							System.setProperty("webdriver.ie.driver", System.getProperty("user.dir")+"/drivers/IEDriverServer.exe");
+							//System.setProperty("webdriver.ie.driver", System.getProperty("user.dir")+"/drivers/IEDriverServer.exe");
+							System.setProperty("webdriver.ie.driver", "C:/QAT/drivers/IEDriverServer.exe");
+							
 							driver = new InternetExplorerDriver(options);
 							
 							break;						
-					case "Safari": //Deprecated for Windows, only in MAC now						
+					case "SAFARI": //Deprecated for Windows, only in MAC now						
 						/**	System.setProperty("webdriver.safari.driver", "C:\\safaridriver.exe");  //gecko is required for Selenium 3
 							driver = new SafariDriver();				
 						
 							break;**/
-					case "Chrome (Non-GUI)":
+					case "CHROME (NON-GUI)":
 							//*** Headless ***//
-							System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+"/drivers/chromedriver.exe");
+							System.setProperty("webdriver.chrome.driver", "C:/QAT/drivers/chromedriver.exe");
 							ChromeOptions chromeOptions = new ChromeOptions();
 					        chromeOptions.addArguments("--headless");
 					        chromeOptions.addArguments("--disable-gpu");  //disable GPU accelerator abd it doesn't work properly in headless mode           
@@ -162,7 +170,7 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 							//driver = new HtmlUnitDriver();				
 							//((HtmlUnitDriver)driver).setJavascriptEnabled(true);
 					        break;				        
-					case "Firefox (Non-GUI)":
+					case "FIREFOX (NON-GUI)":
 					        /** Headless **/
 							FirefoxDriverManager.getInstance().setup();	
 							FirefoxBinary firefoxBinary = new FirefoxBinary();
@@ -173,8 +181,8 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 							FirefoxDriver fdriver = new FirefoxDriver(firefoxOptions);
 							this.driver=fdriver;				        
 							break;
-					case "Microsoft Edge":
-							System.setProperty("webdriver.edge.driver", System.getProperty("user.dir")+"/drivers/MicrosoftWebDriver.exe");  //Get the OS Build number from the Computer (Settings>System>About) and then download the corresponding driver exe
+					case "MICROSOFT EDGE":
+							System.setProperty("webdriver.edge.driver", "C:/QAT/drivers/MicrosoftWebDriver.exe");  //Get the OS Build number from the Computer (Settings>System>About) and then download the corresponding driver exe
 							//System.setProperty("webdriver.edge.driver", "C:\\Program Files (x86)\\Microsoft Web Driver\\MicrosoftWebDriver.exe");
 							//DesiredCapabilities capabilities = DesiredCapabilities.edge();
 							//driver = new EdgeDriver(capabilities);
@@ -205,8 +213,8 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 			}
 					
 			//case "Textbox: Enter Text (locator value, test data)": 
-		case "Enter Text":
-		case "Enter Text (auto parameterise)":
+		case "ENTER TEXT":
+		case "ENTER TEXT (AUTO PARAMETERISE)":
 			{	
 							
 				checkLocParamBlankValues(locatorValue, testdata);  //check null or blank values and set the exceptionerror and exceptionmessage text.
@@ -242,7 +250,7 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 			
 		
 			
-		case "Enter Text (textarea)":
+		case "ENTER TEXT (TEXTAREA)":
 		{	
 			checkLocParamBlankValues(locatorValue, testdata);  //check null or blank values and set the exceptionerror and exceptionmessage text.
 			if (!exceptionerror)  //Execute it only if the values are valid
@@ -280,8 +288,9 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 			
 					
 			
-			case "Validate Text in textbox": 
-			case "Validate Text in textarea": 
+			case "VALIDATE TEXT IN TEXTBOX": 
+			case "VALIDATE TEXT IN TEXTAREA": 
+			case "VALIDATE TEXT (CAPTION)": 
 			{
 				checkLocParamBlankValues(locatorValue, testdata);  //check null or blank values and set the exceptionerror and exceptionmessage text.
 				if (!exceptionerror)  //Execute it only if the values are valid
@@ -311,13 +320,14 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 				break;
 			}
 			
-			case "Validate Text (caption)": 
+			/**case "Validate Text (caption)": //COVERED ABOVE
 			{
 				checkLocParamBlankValues(locatorValue, testdata);  //check null or blank values and set the exceptionerror and exceptionmessage text.
 				if (!exceptionerror) //Execute it only if the values are valid
 				{
 					findElement();
-					validation.validateCaption(element, testdata, driver);
+					assertEquals(element.getText(),testdata);
+					//validation.validateCaption(element, testdata, driver);**/
 				/**	switch (locatortype)
 					{
 						case "ID": validation.validateCaptionById(elementId, testdata, driver);
@@ -333,10 +343,10 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 							errormessage="Invalid or No Locator type specified for the caption/text to validate.";
 							exceptionerror=true;   
 					}**/					
-				}
-				break;
-			}
-			case "Select Text from dropdown": 
+			//	}
+		//		break;
+		//	}**/
+			case "SELECT TEXT FROM DROPDOWN": 
 			{
 				checkLocParamBlankValues(locatorValue, testdata);  //check null or blank values and set the exceptionerror and exceptionmessage text.
 				if (!exceptionerror) //Execute it only if the values are valid
@@ -353,38 +363,43 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 						else if (object.equals("Vessel dropdown*"))
 						{
 							selectDropDownListPOAL(locatorValue, testdata, "/html/body/ul[3]");
-						}					
-					//POAL Specific Block Ends/////////////
-					else
-					{
-						switch (locatorType)
+						}	
+						else if (object.equals("Who was Involved dropdown*"))
 						{
-							case "ID": new Select(driver.findElement(By.id(locatorValue))).selectByVisibleText(testdata);//selectdropdown.selectDropdownValueById(locatorValue, testdata, driver);
-							break;
-							case "Xpath":	new Select(driver.findElement(By.xpath(locatorValue))).selectByVisibleText(testdata);	
-							break;
-							case "Name":  new Select(driver.findElement(By.name(locatorValue))).selectByVisibleText(testdata);
-							break;
-							case "CssSelector":  new Select(driver.findElement(By.cssSelector(locatorValue))).selectByVisibleText(testdata);
-							break;
-							default:
-								//logger.log(LogStatus.INFO,"Invalid or No Locator type specified for the dropdown to select value."); //JOptionPane.showMessageDialog(null,"Invalid Command.");	//No action and show a message box to the user, if required.
-								errormessage="Invalid or No Locator type specified for the dropdown to select value.";
-								exceptionerror=true;   
-							
+							selectDropDownListPOAL(locatorValue, testdata, "/html/body/ul[1]");
+						}	
+					//POAL Specific Block Ends/////////////
+						else
+						{
+							switch (locatorType)
+							{
+								case "ID": new Select(driver.findElement(By.id(locatorValue))).selectByVisibleText(testdata);//selectdropdown.selectDropdownValueById(locatorValue, testdata, driver);
+								break;
+								case "Xpath":	new Select(driver.findElement(By.xpath(locatorValue))).selectByVisibleText(testdata);	
+								break;
+								case "Name":  new Select(driver.findElement(By.name(locatorValue))).selectByVisibleText(testdata);
+								break;
+								case "CssSelector":  new Select(driver.findElement(By.cssSelector(locatorValue))).selectByVisibleText(testdata);
+								break;
+								default:
+									//logger.log(LogStatus.INFO,"Invalid or No Locator type specified for the dropdown to select value."); //JOptionPane.showMessageDialog(null,"Invalid Command.");	//No action and show a message box to the user, if required.
+									errormessage="Invalid or No Locator type specified for the dropdown to select value.";
+									exceptionerror=true;   
+								
+							}
 						}
-					}
 				}
 				break;
 			}
 			
-			case "Validate Text in dropdown": 
+			case "VALIDATE TEXT IN DROPDOWN": 
 			{
 				checkLocParamBlankValues(locatorValue, testdata);  //check null or blank values and set the exceptionerror and exceptionmessage text.
 				if (!exceptionerror)  //Execute it only if the values are valid
 				{
 					findElement();
-					validation.validateDropdownValue(element, testdata, driver);
+					assertEquals(new Select(element).getFirstSelectedOption().getText(), testdata);	  // To get the selected dropdown value		
+					//validation.validateDropdownValue(element, testdata, driver);
 					/**
 					switch (locatortype)
 					{
@@ -405,7 +420,7 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 				}
 				break;
 			}
-			case "Validate Text of button": 
+			case "VALIDATE TEXT OF BUTTON": 
 			{
 				checkLocParamBlankValues(locatorValue, testdata);  //check null or blank values and set the exceptionerror and exceptionmessage text.
 				if (!exceptionerror)  //Execute it only if the values are valid
@@ -433,8 +448,8 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 				break;
 			}
 			//case "Object: Click (locator value)":
-			case "Click":
-			case "Click on hyperlink":	
+			case "CLICK":
+			case "CLICK ON HYPERLINK":	
 			{
 				checkLocBlankValue(locatorValue);  //check null or blank values and set the exceptionerror and exceptionmessage text.
 				if (!exceptionerror) //Execute it only if the values are valid
@@ -455,7 +470,7 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 							//driver.findElement(By.linkText(testdata+" - Review Hazard")).click();
 						}**/ 
 						//////		//POAL Specific Block Ends/////////////
-						if (stepdescription.equals("Click on hyperlink"))
+						if (stepdescription.equalsIgnoreCase("Click on hyperlink"))
 						{
 							driver.findElement(By.linkText(testdata)).click();
 						}
@@ -511,7 +526,8 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 			}
 			
 			
-			case "PressKey (Enter/Return/Tab/Escape)":
+			case "PRESSKEY (ENTER/RETURN/TAB/ESCAPE)":
+			case "PRESSKEY (LEFTARROW/RIGHTARROW/UPARROW/DOWNARROW)":
 			{
 				checkLocBlankValue(locatorValue);  //check null or blank values and set the exceptionerror and exceptionmessage text.
 				if (!exceptionerror)  //Execute it only if the values are valid
@@ -538,13 +554,13 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 				break;
 			}	
 			
-			case "Pause Execution (specify seconds)":
+			case "PAUSE EXECUTION (SPECIFY SECONDS)":
 			{
 				long sleeptimeinsec= Long.parseLong(testdata+"000");  //convert string to long				
 				Thread.sleep(sleeptimeinsec);	
 				break;
 			}
-			case "Close Browser": 
+			case "CLOSE BROWSER": 
 			{
 				driver.close();
 				//driver.quit();
@@ -552,7 +568,7 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 				break;
 			}
 			
-			case "Validate Object Presence":
+			case "VALIDATE OBJECT PRESENCE":
 			{
 				checkLocBlankValue(locatorValue);  //check null or blank values and set the exceptionerror and exceptionmessage text.
 				if (!exceptionerror)  //Execute it only if the values are valid
@@ -579,7 +595,7 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 				break;
 			}
 		//POAL///	
-			case "Validate if Object is Present in the table view":
+			case "VALIDATE IF OBJECT IS PRESENT IN THE TABLE VIEW":
 			{
 				checkLocBlankValue(locatorValue);  //check null or blank values and set the exceptionerror and exceptionmessage text.
 				if (!exceptionerror)  //Execute it only if the values are valid
@@ -665,8 +681,8 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 			}	**/
 			
 			
-			case "Validate if Checkbox is Selected":
-			case "Validate if Radiobutton is Selected":
+			case "VALIDATE IF CCHECKBOX IS SELECTED":
+			case "VALIDATE IF RADIOBUTTON IS SELECTED":
 			{
 				checkLocBlankValue(locatorValue);  //check null or blank values and set the exceptionerror and exceptionmessage text.
 				if (!exceptionerror)  //Execute it only if the values are valid
@@ -713,19 +729,19 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 				break;
 			}**/
 			
-			case "Do Not Execute This Step":
+			case "DO NOT EXECUTE THIS STEP":
 			{
 				/// DO Nothing
 				break;
 			}	
-			case "Browser: Save Attributes (before new window)":
+			case "BROWSER: SAVE ATTRIBUTES (BEFORE NEW WINDOW)":
 			{
 				winhandlebefore = driver.getWindowHandle(); 
 				// get all the window handles before the popup window appears
 				beforepopup = driver.getWindowHandles();
 				break;
 			}
-			case "Browser: Switch to new window":
+			case "BROWSER: SWITCH TO NEW WINDOW":
 			{
 				// get all the window handles after the popup window appears
 				Set<String> afterPopup = driver.getWindowHandles();
@@ -740,7 +756,7 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 				}	    
 				break;
 			}
-			case "Browser: Switch back to old window":
+			case "BROWSER: SWITCH BACK TO OLD WINDOW":
 			{
 				driver.close();
 				driver.switchTo().window(winhandlebefore); 
@@ -749,6 +765,16 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 			
 			default: 
 			{
+				if (tcid.equals("") && tc_desc.equals("") && stepid.equals("") && stepdescription.equals("") && page.equals("") && object.equals("") && testdata.equals(""))
+				{
+					allRowBlank=true;
+					break;
+				}
+				if (stepdescription.equalsIgnoreCase("Not Executing")) 
+				{ 
+					break; 
+				} 
+					
 				errormessage="Invalid or No command specified."; //JOptionPane.showMessageDialog(null,"Invalid Command.");	//No action and show a message box to the user, if required.
 				exceptionerror=true;   
 				break;
@@ -776,11 +802,11 @@ public Object[][] readTestCases() throws Exception   // Load Data Excel
 	//sheetnumber = sheetnumber; // As user will input the exact serial number and the index starts from 0.
 ///	String excelpath=propertyconfig.getExcelSheetPath();
   	//ExcelDataConfig excelconfig = new ExcelDataConfig("C:\\Users\\rbhatia\\Google Drive\\Project\\Automation\\ZAuto\\TestCases.xlsx");	  	  	
-	ExcelDataConfig excelconfig = new ExcelDataConfig(testcasepath, sheetnumber);
+	ExcelDataConfig excelconfig = new ExcelDataConfig(testcasepath, sheetName);
 		
-  	int rows=excelconfig.getRowCount(sheetnumber);  //rows in the first sheet
+  	int rows=excelconfig.getRowCount(sheetName);  //rows in the first sheet
 //	int cols=excelconfig.getColCount(sheetnumber);  //cols in the first sheet
-  	int cols = 18;										// Fixing it as we know the Columnc count
+  	int cols = 18;										// Fixing it as we know the Column count
 	if (rows>=0 && cols>=0) //atleast one , index 0
 	{
 		testcasesdata = new Object[rows][cols];	
@@ -788,7 +814,7 @@ public Object[][] readTestCases() throws Exception   // Load Data Excel
 		{
 		    for (int j=0;j<cols;j++)  //Columns value is one more than the index so less than sign
 			{
-				testcasesdata[i][j]=excelconfig.getData(sheetnumber, i+1, j);  //Picking data from the 2nd row in excel sheet, so i+1
+				testcasesdata[i][j]=excelconfig.getData(sheetName, i+1, j);  //Picking data from the 2nd row in excel sheet, so i+1
 		    
 				/**if (j==6)   //As DoB field is in the 7th col (6th index)
 				{
@@ -801,9 +827,7 @@ public Object[][] readTestCases() throws Exception   // Load Data Excel
 					// -----------------------------------------------------------------     //		
 				}**/
 			}					
-		}
-	
-		
+		}		
 	}
 	return testcasesdata;
 }
@@ -815,8 +839,16 @@ public void tearD(ITestResult result) throws Exception
 	 {
 	 	 //String screenshot_path = ReportScreenshotUtility.captureScreenshot(driver,"/test-output/screenshots/",result.getName());   //Take screenshot if Test Case fails
 		 String screenshot_path = ReportScreenshotUtility.captureScreenshot(driver,executionreportpath,result.getName());   //Take screenshot if Test Case fails and at the same location where execution report is saved.
-	 	 String image=logger.addScreenCapture(screenshot_path);
-	 	 String exceptionmessage= image +  "Error Message: "+ result.getThrowable()+".\n"+errormessage;	 	 
+		 String image="";
+		 if (screenshot_path.contains("Exception while taking screenshot: ")) 
+	 	 {
+	 		 errormessage = screenshot_path;  //capture the error in case of taking screenshot, no image
+	 	 }
+	 	 else
+	 	 {
+	 		 image=logger.addScreenCapture(screenshot_path);
+	 	 }
+		 String exceptionmessage= image +  "Error Message: "+ result.getThrowable()+".\n"+errormessage;	 	 
 	 	 logger.log(LogStatus.FAIL, "Step ID: "+stepid+", Step Desc: "+stepdescription+", Object: "+ objectName, exceptionmessage);
 	 	 ///logger.log(LogStatus.INFO,"PageSource",driver.getPageSource());
 	 	 //if(ITestResult.FAILURE==result.getStatus())		logger.log(LogStatus.FAIL, "Step ID: "+stepid+", Step Desc: "+stepdescription+": FAILED. Error Message: "+ result.getThrowable());
@@ -831,16 +863,26 @@ public void tearD(ITestResult result) throws Exception
 	 }
 	 else if (ITestResult.SUCCESS==result.getStatus() && (!exceptionerror))   //Check if Test case has passed
 	 {
-	 	 if (stepdescription.equals("DO NOT EXECUTE THIS STEP")) logger.log(LogStatus.PASS, "Step ID: "+stepid+", Step Desc: "+stepdescription+", Object: "+ objectName,"SKIPPED");  //to capture the non-executed step in the report.
-	 	 else logger.log(LogStatus.PASS, "Step ID: "+stepid+", Step Desc: "+stepdescription+", Object: "+ objectName,"PASSED");	
+	 	 if (stepdescription.equalsIgnoreCase("DO NOT EXECUTE THIS STEP"))
+	 	 {
+	 		 logger.log(LogStatus.PASS, "Step ID: "+stepid+", Step Desc: "+stepdescription+", Object: "+ objectName,"SKIPPED");  //to capture the non-executed step in the report.
+	 	 }
+	 	 else if ((allRowBlank==true) || (stepdescription.equalsIgnoreCase("Not Executing")))
+	 	 {
+	 		 // Do Not Log anything if row is blank or not executing that step/flag is N 
+	 	 }
+	 	 else 
+	 	 {
+	 		 logger.log(LogStatus.PASS, "Step ID: "+stepid+", Step Desc: "+stepdescription+", Object: "+ objectName,"PASSED");	
+	 	 }
 	 }
-	 else if (ITestResult.SKIP==result.getStatus())  //Check if Test case has passed
+	 else if (ITestResult.SKIP==result.getStatus())  //Check if Test case has skipped
 	 {
 		logger.log(LogStatus.SKIP, "Step ID: "+stepid+", Step Desc: "+stepdescription+", Object: "+ objectName+": SKIPPED.", result.getThrowable());
 	 }		
 		// ReportScreenshotUtility.report.endTest(logger);
 	 	
-		 ReportScreenshotUtility.report.flush();
+		 //ReportScreenshotUtility.report.flush(); //This may flush the results after every step
 		 
 		 //ReportScreenshotUtility.report.
 		
@@ -899,32 +941,33 @@ public void transform(ITestAnnotation annotation, Class testClass,
 		Constructor testConstructor, Method testMethod)   //It gets called from InvokeMaster (implemented in that class in this project) OR through testng.xml file.
 	{
 		// TODO Auto-generated method stub
-		ExcelDataConfig excelreadpreferences = new ExcelDataConfig(System.getProperty("user.dir")+"/Preferences.xlsx",0);
-		
+		preferencesSheetName = "Control"; //This is called first, so Preferences Sheet name here also
+		//ExcelDataConfig excelreadpreferences = new ExcelDataConfig(System.getProperty("user.dir")+"/Preferences.xlsm",preferencesSheetName);  // dir returning base path in the tool so changing to Home
+		ExcelDataConfig excelreadpreferences = new ExcelDataConfig(InvokeMaster.sheetDirPathAndName,preferencesSheetName);  
 		
 			//preferencesdata = new Object[5][1];
 			/**for(int i=0;i<5;i++)   //Initializing Array to rows-1. First row is just headings and make sure every column cell has a text
 			{
 				for(int j=0;j<1;j++)  //Columns value is one more than the index so less than sign
 				{
-					preferencesdata[4][0]=excelreadpreferences.getData(0, 5, 1);  //Picking data from the 2nd row in excel sheet, so i+1
+					preferencesdata[3][0]=excelreadpreferences.getData(0, 5, 1);  //Picking data from the 2nd row in excel sheet, so i+1
 					
 				}					
 			}**/
-			preferencesdata[4][0]=excelreadpreferences.getData(0, 5, 1); //InvocationCount same data multiple executions  //Picking data from the 2nd column in excel sheet, so i+1
-			preferencesdata[5][0]=excelreadpreferences.getData(0, 6, 1); //InvocationCount different data multiple executions
+			preferencesdata[2][0]=excelreadpreferences.getData(preferencesSheetName, 3, 1); //InvocationCount same data multiple executions  //Picking data from the 2nd column in excel sheet, so i+1
+			preferencesdata[3][0]=excelreadpreferences.getData(preferencesSheetName, 4, 1); //InvocationCount different data multiple executions
 			//Same data multiple execution
 			//if (preferencesdata[4][0]!=""  && preferencesdata[4][0]!="0")		
 			
-			if (((String) preferencesdata[4][0]).matches("[0-9]+") && ((String) preferencesdata[4][0]).length() >= 1 && !preferencesdata[4][0].equals("0")) // No need for this condition && !preferencesdata[4][0].equals(""))
+			if (((String) preferencesdata[2][0]).matches("[0-9]+") && ((String) preferencesdata[2][0]).length() >= 1 && !preferencesdata[2][0].equals("0")) // No need for this condition && !preferencesdata[3][0].equals(""))
 			{
-					invocationcount = Integer.parseInt((String) preferencesdata[4][0]);
+					invocationcount = Integer.parseInt((String) preferencesdata[2][0]);
 			}
 			else
 			{
-					if (!preferencesdata[5][0].equals("0") && ((String) preferencesdata[5][0]).matches("[0-9]+") && ((String) preferencesdata[5][0]).length() >= 1 )	// check for integer values only
+					if (!preferencesdata[3][0].equals("0") && ((String) preferencesdata[3][0]).matches("[0-9]+") && ((String) preferencesdata[3][0]).length() >= 1 )	// check for integer values only
 					{	
-						invocationcount = Integer.parseInt((String) preferencesdata[5][0]); //Different test data each time for multiple executions. It can't work with multiple runs and same test data
+						invocationcount = Integer.parseInt((String) preferencesdata[3][0]); //Different test data each time for multiple executions. It can't work with multiple runs and same test data
 					}
 					else
 					{									//don't need to do anything if nothing mentioned
@@ -954,7 +997,7 @@ public void isWebElementVisible(WebElement element)
 	if (!element.isDisplayed()) 					
 	{
 		counter++;  //to check counter progress
-		if(counter==3)	wait = new WebDriverWait(driver, 0); // 0 seconds explicit wait
+		if(counter>=3)	wait = new WebDriverWait(driver, 0); // 0 seconds explicit wait
 	}	
 }
 
@@ -989,7 +1032,7 @@ public void selectDropDownListPOAL(String locatorvalue, String testdata, String 
 	
 	try {
 	driver.findElement(By.xpath(locatorvalue)).click();					//Click Arrow.
-	Thread.sleep(1000);			//The value wasn't getting picked from the below WebElement selectParentListOrgUnitPath
+	Thread.sleep(1500);			//The value wasn't getting picked from the below WebElement selectParentListOrgUnitPath
 	//new Click().click(driver, elementXpath);
 	WebElement selectParentListOrgUnitPath = driver.findElement(By.xpath(listXpath));
 	//selectListValue(selectParentListOrgUnitPath,testdata);

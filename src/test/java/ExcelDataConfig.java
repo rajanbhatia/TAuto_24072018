@@ -21,14 +21,14 @@ public class ExcelDataConfig {
 	OPCPackage opcPackage;
 	
 	//Open Excel WorkBook
-	public ExcelDataConfig(String excelpath, int sheetnumber) // Constructor
+	public ExcelDataConfig(String excelpath, String sheetName) // Constructor
 	{
 		try 
 		{					
 			//FileInputStream fis = new FileInputStream(new File(excelpath));  // Load the excel sheet in the form of Bytes		 
 			opcPackage = OPCPackage.open(new File(excelpath)); // To speed up... ??
 			wbxlsx = new XSSFWorkbook(opcPackage);
-			sheetxlsx = wbxlsx.getSheetAt(sheetnumber);
+			sheetxlsx = wbxlsx.getSheet(sheetName);
 			Row row=sheetxlsx.getRow(0);
 			if (row==null)
 			{
@@ -57,7 +57,7 @@ public class ExcelDataConfig {
 				**/	
 		} 
 		catch (Exception e) {
-			JOptionPane.showMessageDialog(null, e.getMessage(), "Exception",0);
+			JOptionPane.showMessageDialog(null, "Error:"+e.getMessage(), "Exception",0);
 			System.exit(1);
 			//System.out.println(e.getMessage());
 		}		
@@ -76,30 +76,31 @@ public class ExcelDataConfig {
 	}**/
 	
 	//Get data from Excel	
-	public String getData(int sheetnumber, int row, int column)
+	public String getData(String sheetName, int row, int column)
 	{
 		Cell cell=null;
 		DataFormatter formatter = new DataFormatter(); //creating formatter using the default locale
-		sheetxlsx = wbxlsx.getSheetAt(sheetnumber);
+		//sheetxlsx = wbxlsx.getSheetAt(sheetnumber);
+		sheetxlsx = wbxlsx.getSheet(sheetName);
 		cell = sheetxlsx.getRow(row).getCell(column);   //get the value from the cell
 		String data = formatter.formatCellValue((Cell) cell);  //Returns the formatted value of a cell as a String regardless of the cell type.
 		
 		return data;		
 	}
 	
-	public int getRowCount(int sheetIndex)
+	public int getRowCount(String sheetName)
 	{
 		int row=0;
 		//if(fileExtensionName.equals(".xlsx"))		row = wbxlsx.getSheetAt(sheetIndex).getLastRowNum();
-		row = wbxlsx.getSheetAt(sheetIndex).getLastRowNum();
+		row = wbxlsx.getSheet(sheetName).getLastRowNum();
 		//row++;
 		return row;
 	}
 	
-	public int getColCount(int sheetIndex)
+	public int getColCount(String sheetName)
 	{
 		int col =0;
-		col=wbxlsx.getSheetAt(sheetIndex).getRow(0).getLastCellNum();
+		col=wbxlsx.getSheet(sheetName).getRow(0).getLastCellNum();
 		return col;
 	}
 	
@@ -112,18 +113,19 @@ public class ExcelDataConfig {
 			e.getMessage();
 		}
 	}**/
-	
-	public String putData(int sheetnumber, int row, int column)
+/**		NOT USED	
+	public String putData(int sheetNumber, int row, int column)
 	{
 		Cell cell=null;
 		DataFormatter formatter = new DataFormatter(); //creating formatter using the default locale
-		sheetxlsx = wbxlsx.getSheetAt(sheetnumber);
+		sheetxlsx = wbxlsx.getSheetAt(sheetNumber);
+		
 		cell = sheetxlsx.getRow(row).getCell(column);   //get the value from the cell
 		String data = formatter.formatCellValue(cell);  //Returns the formatted value of a cell as a String regardless of the cell type.
 	
 		return data;		
 	}
-	
+	**/
 	public String changeDateFormat(String datevalue)
 	{
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");

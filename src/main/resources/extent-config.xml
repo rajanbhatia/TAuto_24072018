@@ -20,7 +20,11 @@
     <reportName>Automation Testing Report:</reportName>
     
     <!-- report headline - displayed at top-nav, after reportHeadline -->
-    <reportHeadline>UAT Environment</reportHeadline>
+    <!-- >reportHeadline>UAT Environment</reportHeadline-->
+    
+    <!-- location of charts in the test view -->
+    <!-- top, bottom -->
+    <testViewChartLocation>top</testViewChartLocation>
     
     <!-- global date format override -->
     <!-- defaults to yyyy-MM-dd -->

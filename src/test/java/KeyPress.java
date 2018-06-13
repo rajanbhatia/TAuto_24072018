@@ -1,4 +1,4 @@
-import org.openqa.selenium.By;
+
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -7,7 +7,7 @@ import org.openqa.selenium.WebElement;
 public class KeyPress  // Class to press keyboard keys at different objects
 {
 	
-	public void keyXpath(WebElement xpath, String key, WebDriver driver)
+/**	public void keyXpath(WebElement xpath, String key, WebDriver driver)
 	{
 		switch (key)
 		{
@@ -21,24 +21,32 @@ public class KeyPress  // Class to press keyboard keys at different objects
 		break;
 		}
 	 
-	}
+	}**/
 
 	public void keyId(WebElement id, String key, WebDriver driver)
 	{
-		switch (key)
+		switch (key.toUpperCase())
 		{
-		case "Enter":   id.sendKeys(Keys.ENTER); //String Format should be like "Keys.RETURN"
+		case "ENTER":   id.sendKeys(Keys.ENTER); //String Format should be like "Keys.RETURN"
 	    //selenium.keyPressNative("10"); // Enter //	 
 		break;
-		case "Return": 	id.sendKeys(Keys.RETURN); //String Format should be like "Keys.RETURN"	 
+		case "RETURN": 	id.sendKeys(Keys.RETURN); //String Format should be like "Keys.RETURN"	 
 		break;
-		case "Tab": 	id.sendKeys(Keys.TAB); //String Format should be like "Keys.RETURN"	 
+		case "TAB": 	id.sendKeys(Keys.TAB); //String Format should be like "Keys.RETURN"	 
 		break;	
-		case "Escape": 	id.sendKeys(Keys.ESCAPE); //String Format should be like "Keys.RETURN"	 
+		case "ESCAPE": 	id.sendKeys(Keys.ESCAPE); //String Format should be like "Keys.RETURN"	 
+		break;
+		case "DOWNARROW": 	id.sendKeys(Keys.ARROW_DOWN); //String Format should be like "Keys.RETURN"	 
+		break;
+		case "UPARROW": 	id.sendKeys(Keys.ARROW_UP); //String Format should be like "Keys.RETURN"	 
+		break;
+		case "LEFTARROW": 	id.sendKeys(Keys.ARROW_LEFT); //String Format should be like "Keys.RETURN"	 
+		break;
+		case "RIGHTARROW": 	id.sendKeys(Keys.ARROW_RIGHT); //String Format should be like "Keys.RETURN"	 
 		break;
 		}	 	 
 	}
-	
+	/**
 	public void keyName(WebElement name, String key, WebDriver driver)
 	{	
 		switch (key)
@@ -67,8 +75,8 @@ public class KeyPress  // Class to press keyboard keys at different objects
 		case "Escape": 	css.sendKeys(Keys.ESCAPE); //String Format should be like "Keys.RETURN"	 
 		break;
 		}	 
-		 
-	}
+		
+	}**/
 	
  
 	
