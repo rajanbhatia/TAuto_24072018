@@ -82,7 +82,7 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 		case "OPEN BROWSER":
 			{
 				if (logger != null)	  ReportScreenshotUtility.report.endTest(logger);  // close it for second run
-				logger = ReportScreenshotUtility.report.startTest("Automation Run: Testcase- "+tcid+"("+tc_desc+")"); //To log every testcase on the left panel and teststeps on the right.
+				logger = ReportScreenshotUtility.report.startTest("Automation Run: Testcase- "+tcid+" ("+tc_desc+")"); //To log every testcase on the left panel and teststeps on the right.
 				//browserSettings(driver, testdata);
 				switch(browsername.toUpperCase())
 				{
@@ -610,7 +610,7 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 							assertTrue(isElementPresent(By.linkText(testdata)));  // If Hyperlink
 					}
 					
-					//System.out.println(locatorValue+"[contains(text(),'"+testdata+"')]");
+				
 					//assertTrue(isElementPresent(By.id(locatorValue)));
 				//	switch (locatortype)
 				//	{

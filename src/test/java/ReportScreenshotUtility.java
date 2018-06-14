@@ -30,7 +30,7 @@ public class ReportScreenshotUtility
 		catch (Exception e)
 		{
 			System.out.println("Exception while taking screenshot: "+e.getMessage());
-			return "Exception while taking screenshot: "+e.getMessage();					
+			return "Exception while taking screenshot: "+e.getMessage();					// To capture and display the error result in the report
 		}
 	}
 	

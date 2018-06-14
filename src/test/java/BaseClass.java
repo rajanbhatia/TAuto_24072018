@@ -1,6 +1,9 @@
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.LogManager;
@@ -10,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.WebDriver;
 import org.testng.AssertJUnit;
 import org.testng.annotations.AfterClass;
@@ -144,6 +148,9 @@ public void setUp() throws Exception
 	    ReportScreenshotUtility.report.flush();	    
 	    ReportScreenshotUtility.report.endTest(logger);
 	    ReportScreenshotUtility.report.close();
+	    
+	    copyExecutioReportToMainDirectory();
+
 	    //ReportScreenshotUtility.report.close(); It's causing error -  Close was called before test could end safely using EndTest.
 	    
 	    //super.getReport().endTest(super.getLogger());
@@ -227,5 +234,17 @@ public void setUp() throws Exception
 	}
 	
 	
-	
+	 public void copyExecutioReportToMainDirectory()		//Copy report to the main directory so that View Execution Result button can work from excel
+	 {
+		try {
+		File src = new File(executionreportpath+"\\Automation Test Execution Report.html");
+	    File dest = new File(InvokeMaster.sheetDirPath+"\\Automation Test Execution Report.html");
+	    
+		FileUtils.copyFile(src, dest);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    //Files.copy(src,dest, StandardCopyOption.REPLACE_EXISTING);
+	 }
 }
