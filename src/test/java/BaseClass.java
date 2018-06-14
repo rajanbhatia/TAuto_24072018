@@ -34,7 +34,7 @@ public class BaseClass {
 	//protected Validations validation= new Validations();
 	protected KeyPress keypress = new KeyPress();
 	protected ExtentTest logger;	//Main class to generate the Logs and add to the report
-	protected String executionreportpath, errormessage, testcasepath, browsername, sheetName, preferencesSheetName;
+	protected String executionreportpath, errormessage, testcasepath, browsername, sheetName, preferencesSheetName, executionReportCopyPathForExcelButton;
 	protected int sheetnumber, invocationcount;	//invcationcount to run multiple times for same set of test data
 	
 	protected Object preferencesdata[][]=new Object[4][1];
@@ -92,7 +92,7 @@ public void setUp() throws Exception
 			}
 			else		executionreportpath = InvokeMaster.sheetDirPath;					//Report path local sheet directory
 			// Check Multiple executions with same data
-		
+			executionReportCopyPathForExcelButton = executionreportpath;
 			executionreportpath = createReportDirectory(executionreportpath);
 			
 			
@@ -238,7 +238,7 @@ public void setUp() throws Exception
 	 {
 		try {
 		File src = new File(executionreportpath+"\\Automation Test Execution Report.html");
-	    File dest = new File(InvokeMaster.sheetDirPath+"\\Automation Test Execution Report.html");
+	    File dest = new File(executionReportCopyPathForExcelButton+"\\Automation Test Execution Report.html");
 	    
 		FileUtils.copyFile(src, dest);
 		} catch (IOException e) {

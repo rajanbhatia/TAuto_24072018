@@ -681,7 +681,7 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 			}	**/
 			
 			
-			case "VALIDATE IF CCHECKBOX IS SELECTED":
+			case "VALIDATE IF CHECKBOX IS SELECTED":
 			case "VALIDATE IF RADIOBUTTON IS SELECTED":
 			{
 				checkLocBlankValue(locatorValue);  //check null or blank values and set the exceptionerror and exceptionmessage text.
