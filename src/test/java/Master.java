@@ -42,7 +42,7 @@ public class Master extends BaseClass implements IAnnotationTransformer
 	WebDriverWait wait;
 	WebElement element; // elementID, elementName, elementCssSelector; 
 	int counter =0; //to count if 3 objects are not found together in 3 steps than change the Explicit wait time period for that specific test case
-	
+	//ExcelDataConfig excelreadpreferences;  //Declared in the Base class
 @Test(dataProvider = "TestSteps")//, threadPoolSize=2)		//, invocationCount=invocationcount) //invocationCount set at run time
 public void main(String tcid, String tc_desc, String stepid, String step_desc, String page, String object, String testdata, String executeFlag,String a2, String a3,String a4, String a5,String a6, String a7,String a8, String a9, String locatortype, String locatorvalue) //, String result, String error)
 {	
@@ -802,9 +802,9 @@ public Object[][] readTestCases() throws Exception   // Load Data Excel
 	//sheetnumber = sheetnumber; // As user will input the exact serial number and the index starts from 0.
 ///	String excelpath=propertyconfig.getExcelSheetPath();
   	//ExcelDataConfig excelconfig = new ExcelDataConfig("C:\\Users\\rbhatia\\Google Drive\\Project\\Automation\\ZAuto\\TestCases.xlsx");	  	  	
-	ExcelDataConfig excelconfig = new ExcelDataConfig(testcasepath, sheetName);
-		
-  	int rows=excelconfig.getRowCount(sheetName);  //rows in the first sheet
+	//excelreadpreferences = new ExcelDataConfig(testcasepath, sheetName);
+	excelreadpreferences.openSheet(testcasepath, sheetName);	
+  	int rows=excelreadpreferences.getRowCount(sheetName);  //rows in the first sheet
 //	int cols=excelconfig.getColCount(sheetnumber);  //cols in the first sheet
   	int cols = 18;										// Fixing it as we know the Column count
 	if (rows>=0 && cols>=0) //atleast one , index 0
@@ -814,7 +814,7 @@ public Object[][] readTestCases() throws Exception   // Load Data Excel
 		{
 		    for (int j=0;j<cols;j++)  //Columns value is one more than the index so less than sign
 			{
-				testcasesdata[i][j]=excelconfig.getData(sheetName, i+1, j);  //Picking data from the 2nd row in excel sheet, so i+1
+				testcasesdata[i][j]=excelreadpreferences.getData(sheetName, i+1, j);  //Picking data from the 2nd row in excel sheet, so i+1
 		    
 				/**if (j==6)   //As DoB field is in the 7th col (6th index)
 				{
@@ -860,6 +860,7 @@ public void tearD(ITestResult result) throws Exception
 	 	/**String javascript = "return arguments[0].innerHTML";
 	  	 String pagesource=(String)((JavascriptExecutor)driver).executeScript(javascript, driver.findElement(By.tagName("html")));
 	  	 pagesource = "<html>"+pagesource +"</html>";**/ //No need for this code. getPageSource doing the same thing.
+	 	
 	 }
 	 else if (ITestResult.SUCCESS==result.getStatus() && (!exceptionerror))   //Check if Test case has passed
 	 {
@@ -875,6 +876,7 @@ public void tearD(ITestResult result) throws Exception
 	 	 {
 	 		 logger.log(LogStatus.PASS, "Step ID: "+stepid+", Step Desc: "+stepdescription+", Object: "+ objectName,"PASSED");	
 	 	 }
+	 	
 	 }
 	 else if (ITestResult.SKIP==result.getStatus())  //Check if Test case has skipped
 	 {
@@ -885,6 +887,7 @@ public void tearD(ITestResult result) throws Exception
 		 //ReportScreenshotUtility.report.flush(); //This may flush the results after every step
 		 
 		 //ReportScreenshotUtility.report.
+	 
 		
 }
 
@@ -943,8 +946,8 @@ public void transform(ITestAnnotation annotation, Class testClass,
 		// TODO Auto-generated method stub
 		preferencesSheetName = "Control"; //This is called first, so Preferences Sheet name here also
 		//ExcelDataConfig excelreadpreferences = new ExcelDataConfig(System.getProperty("user.dir")+"/Preferences.xlsm",preferencesSheetName);  // dir returning base path in the tool so changing to Home
-		ExcelDataConfig excelreadpreferences = new ExcelDataConfig(InvokeMaster.sheetDirPathAndName,preferencesSheetName);  
-		
+		excelreadpreferences = new ExcelDataConfig(InvokeMaster.sheetDirPathAndName);  //Using this object to get the TestCases data also
+		excelreadpreferences.openSheet(InvokeMaster.sheetDirPathAndName, preferencesSheetName);
 			//preferencesdata = new Object[5][1];
 			/**for(int i=0;i<5;i++)   //Initializing Array to rows-1. First row is just headings and make sure every column cell has a text
 			{

@@ -1,5 +1,9 @@
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -11,6 +15,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
+import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -20,21 +25,16 @@ public class ExcelDataConfig {
 	public XSSFSheet sheetxlsx;	//Global Variable
 	OPCPackage opcPackage;
 	
+
 	//Open Excel WorkBook
-	public ExcelDataConfig(String excelpath, String sheetName) // Constructor
+	public ExcelDataConfig(String excelpath) // Constructor
 	{
 		try 
 		{					
-			//FileInputStream fis = new FileInputStream(new File(excelpath));  // Load the excel sheet in the form of Bytes		 
+			//FileInputStream fis = new FileInputStream(new File(excelpath));  // Load the excel sheet in the form of Bytes
+			
 			opcPackage = OPCPackage.open(new File(excelpath)); // To speed up... ??
-			wbxlsx = new XSSFWorkbook(opcPackage);
-			sheetxlsx = wbxlsx.getSheet(sheetName);
-			Row row=sheetxlsx.getRow(0);
-			if (row==null)
-			{
-				JOptionPane.showMessageDialog(null, "No record/row data found in the excel sheet - "+excelpath);
-				System.exit(1);
-			}
+			wbxlsx = new XSSFWorkbook(opcPackage);			
 			
 			/**
 			///wb = WorkbookFactory.create(new File(excelpath));
@@ -63,11 +63,65 @@ public class ExcelDataConfig {
 		}		
 	}
 	
-/**	public void closeOPC()
+	public void openSheet(String excelPath, String sheetName)
+	{
+		try{
+			sheetxlsx = wbxlsx.getSheet(sheetName);
+			
+			Row row=sheetxlsx.getRow(0);
+			if (row==null)
+			{
+				JOptionPane.showMessageDialog(null, "No record/row data found in the excel sheet - "+excelPath);
+				System.exit(1);
+			}
+		}catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error:"+e.getMessage(), "Exception",0);
+			System.exit(1);
+			//System.out.println(e.getMessage());
+		}	
+	}
+	
+	
+	/**public void writeCompletionMessage()
+	{	
+		try {   	
+			//wbxlsx.close();
+			//opcPackage.close();
+			//FileOutputStream des = new FileOutputStream(InvokeMaster.sheetDirPathAndName);
+			//wbxlsx = new XSSFWorkbook(opcPackage);	
+			sheetxlsx = wbxlsx.getSheet("Control");
+			XSSFRow rowxlsx=  sheetxlsx.getRow(5);
+			if(rowxlsx == null) rowxlsx = sheetxlsx.createRow(5);
+			Cell cell = rowxlsx.getCell(2);
+			if(cell == null) cell = rowxlsx.createCell(2);
+			//sheetxlsx.getRow(4).setCellValue("Test Execution Completed."); //sheet.getRow(i).createCell(2).setCellValue(status);
+			System.out.println(sheetxlsx.getRow(5).getCell(2));
+			//sheetxlsx.getRow(5).createCell(2).setCellValue("Test Execution Completed."); //sheet.getRow(i).createCell(2).setCellValue(status);
+			cell.setCellValue("Test Execution Completed.");
+			System.out.println(sheetxlsx.getRow(5).getCell(2));
+			
+	     //   FileOutputStream fos = new FileOutputStream(file);
+		//	wbxlsx.write(fos);
+		//	fos.close();
+		//	opcPackage.flush();
+			//opcPackage.save(file);
+			
+	//		opcPackage.close();
+			
+			
+			
+			
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	}**/
+	
+	/**public void closeOPC()
 	{
 		try {
-			//sheetxlsx.
-			wbxlsx.close();
+			
+			//wbxlsx.close();
 			opcPackage.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
@@ -42,6 +43,7 @@ public class BaseClass {
 	protected String stepdescription, objectName, stepid;
 	protected JFrame f = new JFrame("Starting Test Execution...");
 	protected Boolean multipleExecutionsDifferentTestData=false;
+	protected ExcelDataConfig excelreadpreferences;
 	
 @BeforeClass(alwaysRun=true)
 public void setUp() throws Exception 
@@ -58,7 +60,8 @@ public void setUp() throws Exception
 	globalLogger.setLevel(java.util.logging.Level.OFF);
 	
 	//ExcelDataConfig excelreadpreferences = new ExcelDataConfig(System.getProperty("user.dir")+"/Preferences.xlsm",preferencesSheetName);	
-	ExcelDataConfig excelreadpreferences = new ExcelDataConfig(testcasepath,preferencesSheetName);
+	excelreadpreferences = new ExcelDataConfig(testcasepath);//,preferencesSheetName);
+	excelreadpreferences.openSheet(testcasepath, preferencesSheetName);
 	//preferencesdata = new Object[5][1];
 	for(int i=0;i<4;i++)   //Initializing Array to rows-1. First row is just headings and make sure every column cell has a text
 	{
@@ -137,6 +140,7 @@ public void setUp() throws Exception
 	@AfterClass(alwaysRun=true)
 	public void tearDown() throws Exception 
 	 {
+		
 		StringBuffer verificationErrors = new StringBuffer();
 		
 	    if ((driver != null))		driver.quit();  // For DEBUGGING, Disable it otherwise ENABLE  
@@ -148,9 +152,22 @@ public void setUp() throws Exception
 	    ReportScreenshotUtility.report.flush();	    
 	    ReportScreenshotUtility.report.endTest(logger);
 	    ReportScreenshotUtility.report.close();
+	    //excelreadpreferences.closeOPC();
 	    
 	    copyExecutioReportToMainDirectory();
-
+	    /// Completion Message///
+	    JOptionPane pane = new JOptionPane("Test Execution Completed.", JOptionPane.INFORMATION_MESSAGE);
+	    JDialog dialog = pane.createDialog("Automation Testing");
+	    dialog.setAlwaysOnTop(true);
+	    dialog.setVisible(true);
+	///////////////////////////
+	    
+	//    displayMessage(null, "Test Completed.");
+		//System.exit(0);
+	
+	   // excelreadpreferences.writeCompletionMessage(); It is corrupting the file so not using. Display a message to the user.
+	    
+	   
 	    //ReportScreenshotUtility.report.close(); It's causing error -  Close was called before test could end safely using EndTest.
 	    
 	    //super.getReport().endTest(super.getLogger());
@@ -180,10 +197,8 @@ public void setUp() throws Exception
 		Date serverDate = (PublicServerTime.getNTPDate());
 		if(serverDate == null) 
 		{
-			JFrame frame = new JFrame("JOptionPane showMessageDialog example");
-		    JOptionPane.showMessageDialog(frame,
-		        "Problem with license authentication. Please contact the vendor.");
-		  	System.exit(0);
+			displayMessage("License", "Problem with license authentication. Please contact the vendor.");
+			System.exit(0);
 		}
 				
 				
@@ -202,14 +217,18 @@ public void setUp() throws Exception
 		//	int dateYear = getCalDate.get(Calendar.YEAR);
 		
 		//Common code to validate
-		if (dateMon >= 7 && dateYear >= 2019)	// Feb 2019
-			{
-				System.out.println("License Expired");
-				JFrame frame = new JFrame("JOptionPane showMessageDialog example");
-			    JOptionPane.showMessageDialog(frame,
-			        "License Expired. Please contact the vendor.");
-			  	System.exit(0);
-			}
+		if (dateYear > 2018)	// Feb 2019
+		{	
+			//System.out.println("License Expired");
+			displayMessage("License", "License Expired. Please contact the vendor.");
+			System.exit(0);
+		}
+		else if (dateMon > 6)
+		{
+			//System.out.println("License Expired");
+			displayMessage("License", "License Expired. Please contact the vendor.");
+			System.exit(0);			
+		}			
 	}
 	
 	public String createReportDirectory(String path)
@@ -247,4 +266,11 @@ public void setUp() throws Exception
 		}
 	    //Files.copy(src,dest, StandardCopyOption.REPLACE_EXISTING);
 	 }
+	 
+	 public void displayMessage(String title, String message)
+	 {
+		 
+		 JOptionPane.showMessageDialog(new JFrame(title),message);
+	 }
+	 
 }
