@@ -48,7 +48,14 @@ public class BaseClass {
 @BeforeClass(alwaysRun=true)
 public void setUp() throws Exception 
 {		
-	checkLicense();  // Set the date before distributing in this method.
+	Boolean licenseStatus = true;
+	licenseStatus = checkLicense();  // Set the date before distributing in this method.
+	
+	if (licenseStatus==false)
+	{
+		displayMessage("License", "License Expired. Please contact the vendor.");
+		System.exit(0);
+	}
 	testcasepath = InvokeMaster.sheetDirPathAndName; 
 	sheetName = "TestCases";
 	preferencesSheetName = "Control"; //Mention it here also	
@@ -190,15 +197,16 @@ public void setUp() throws Exception
 		f.setLocationRelativeTo(null);
 	}
 	
-	private void checkLicense()
+	private Boolean checkLicense()
 	{
 		//PublicServer GetDateTime
 		
 		Date serverDate = (PublicServerTime.getNTPDate());
-		if(serverDate == null) 
+		if(serverDate == null || serverDate.toString()=="") 
 		{
 			displayMessage("License", "Problem with license authentication. Please contact the vendor.");
 			System.exit(0);
+			//return false;
 		}
 				
 				
@@ -217,18 +225,14 @@ public void setUp() throws Exception
 		//	int dateYear = getCalDate.get(Calendar.YEAR);
 		
 		//Common code to validate
-		if (dateYear > 2018)	// Feb 2019
-		{	
+		if (dateYear < 2017)	// Feb 2019
+			return true;
 			//System.out.println("License Expired");
-			displayMessage("License", "License Expired. Please contact the vendor.");
-			System.exit(0);
-		}
-		else if (dateMon > 6)
-		{
-			//System.out.println("License Expired");
-			displayMessage("License", "License Expired. Please contact the vendor.");
-			System.exit(0);			
-		}			
+			//displayMessage("License", "License Expired. Please contact the vendor.");
+			//System.exit(0);
+		else if ((dateYear == 2017) && (dateMon <= 6))		return true;
+		else return false;
+			
 	}
 	
 	public String createReportDirectory(String path)
