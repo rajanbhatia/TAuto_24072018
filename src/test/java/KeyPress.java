@@ -32,8 +32,28 @@ public class KeyPress  // Class to press keyboard keys at different objects
 		break;
 		case "RETURN": 	id.sendKeys(Keys.RETURN); //String Format should be like "Keys.RETURN"	 
 		break;
+		case "F2": 	id.sendKeys(Keys.F2); //String Format should be like "Keys.RETURN"	 
+		break;
+		case "F3": 	id.sendKeys(Keys.F3); //String Format should be like "Keys.RETURN"	 
+		break;
+		case "F5": 	id.sendKeys(Keys.F5); //String Format should be like "Keys.RETURN"	 
+		break;
+		case "DELETE": 	id.sendKeys(Keys.DELETE); //String Format should be like "Keys.RETURN"	 
+		break;
 		case "TAB": 	id.sendKeys(Keys.TAB); //String Format should be like "Keys.RETURN"	 
-		break;	
+		break;
+		case "SHIFT+TAB":
+		{
+			String pressShiftTab =  Keys.chord(Keys.SHIFT,Keys.TAB); 
+			id.sendKeys(pressShiftTab); //String Format should be like "Keys.RETURN"				
+		}
+		break;
+		case "CONTROL+A":
+		{
+			String selectAll = Keys.chord(Keys.CONTROL, "a");
+			id.sendKeys(selectAll);		
+		}
+		break;
 		case "ESCAPE": 	id.sendKeys(Keys.ESCAPE); //String Format should be like "Keys.RETURN"	 
 		break;
 		case "DOWNARROW": 	id.sendKeys(Keys.ARROW_DOWN); //String Format should be like "Keys.RETURN"	 
@@ -42,7 +62,7 @@ public class KeyPress  // Class to press keyboard keys at different objects
 		break;
 		case "LEFTARROW": 	id.sendKeys(Keys.ARROW_LEFT); //String Format should be like "Keys.RETURN"	 
 		break;
-		case "RIGHTARROW": 	id.sendKeys(Keys.ARROW_RIGHT); //String Format should be like "Keys.RETURN"	 
+		case "RIGHTARROW": 	id.sendKeys(Keys.ARROW_RIGHT); //String Format should be like "Keys.RETURN"							
 		break;
 		}	 	 
 	}

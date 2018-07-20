@@ -1,7 +1,11 @@
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 import io.github.bonigarcia.wdm.FirefoxDriverManager;
+
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.Calendar;
@@ -9,6 +13,7 @@ import java.util.List;
 import java.util.Set;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotVisibleException;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriverException;
@@ -24,6 +29,7 @@ import org.openqa.selenium.ie.InternetExplorerOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.Sleeper;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.IAnnotationTransformer;
 import org.testng.ITestResult;
@@ -67,8 +73,10 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 		}
 		
 		//Check explicitly for every Web Element presence
-		if (!locatorType.trim().equals("") && !locatorType.equals(null) && !stepdescription.equalsIgnoreCase("Not Executing"))
+		if (!locatorType.trim().equals("") && !locatorType.equals(null) && !stepdescription.equalsIgnoreCase("Not Executing") && !stepdescription.equalsIgnoreCase("Validate Object Absence") && !stepdescription.equalsIgnoreCase("Click"))  //Adding Click for Microsoft Dynamics CRM only (PAOL) 
 		{
+			//driver.switchTo().frame("contentIFrame0");
+			
 			findElement();		/////No need to call first when it's being called before the main operation in all the cases. But now Element Check is not happening in the beginning so do it before counter=0; otherwise it will always be 0	
 			counter=0;	//reset to 0, if object is found
 			wait = new WebDriverWait(driver, 15); // Reset to 10 seconds explicit wait, if got changed during 3 NotVisible exceptions
@@ -207,7 +215,7 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 					else								 										driver.get("https://"+testdata); //http link code not added now
 					driver.manage().window().maximize();
 				//	driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS); // No need for Implicit
-					wait = new WebDriverWait(driver, 15); // 5 seconds explicit wait
+					wait = new WebDriverWait(driver, 15); // 20 seconds explicit wait
 				}
 				break;
 			}
@@ -296,7 +304,8 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 				if (!exceptionerror)  //Execute it only if the values are valid
 				{	
 					findElement();
-					assertEquals(element.getText(),testdata);
+					assertEquals(element.getText(),testdata);				
+					
 					//assertEquals(element.getAttribute("value"),testdata);
 					//validation.validateTextboxValue(element, testdata, driver);
 					
@@ -316,6 +325,19 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 							errormessage="Invalid or No Locator type specified for the textbox to validate text.";
 							exceptionerror=true;						
 					} **/					
+				}
+				break;
+			}
+			
+			case "VALIDATE SUBSET OF TEXT": 
+			{
+				checkLocParamBlankValues(locatorValue, testdata);  //check null or blank values and set the exceptionerror and exceptionmessage text.
+				if (!exceptionerror)  //Execute it only if the values are valid
+				{	
+					findElement();
+		
+					assertTrue(element.getText().contains(testdata));  // True is the sequence of characters is same 				
+					
 				}
 				break;
 			}
@@ -371,15 +393,15 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 					//POAL Specific Block Ends/////////////
 						else
 						{
-							switch (locatorType)
+							switch (locatorType.toUpperCase())
 							{
 								case "ID": new Select(driver.findElement(By.id(locatorValue))).selectByVisibleText(testdata);//selectdropdown.selectDropdownValueById(locatorValue, testdata, driver);
 								break;
-								case "Xpath":	new Select(driver.findElement(By.xpath(locatorValue))).selectByVisibleText(testdata);	
+								case "XPATH":	new Select(driver.findElement(By.xpath(locatorValue))).selectByVisibleText(testdata);	
 								break;
-								case "Name":  new Select(driver.findElement(By.name(locatorValue))).selectByVisibleText(testdata);
+								case "NAME":  new Select(driver.findElement(By.name(locatorValue))).selectByVisibleText(testdata);
 								break;
-								case "CssSelector":  new Select(driver.findElement(By.cssSelector(locatorValue))).selectByVisibleText(testdata);
+								case "CSSSELECTOR":  new Select(driver.findElement(By.cssSelector(locatorValue))).selectByVisibleText(testdata);
 								break;
 								default:
 									//logger.log(LogStatus.INFO,"Invalid or No Locator type specified for the dropdown to select value."); //JOptionPane.showMessageDialog(null,"Invalid Command.");	//No action and show a message box to the user, if required.
@@ -449,14 +471,17 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 			}
 			//case "Object: Click (locator value)":
 			case "CLICK":
-			case "CLICK ON HYPERLINK":	
+			case "CLICK ON HYPERLINK":
+			case "DOUBLE CLICK":	
 			{
 				checkLocBlankValue(locatorValue);  //check null or blank values and set the exceptionerror and exceptionmessage text.
 				if (!exceptionerror) //Execute it only if the values are valid
 				{
-					try { 
+					try {
+						//driver.switchTo().frame("contentIFrame0");		
+						
 				    	findElement();
-				    	(new WebDriverWait(driver, 15)).until(ExpectedConditions.elementToBeClickable(element));  //checks if element is visible and clickable 
+				    	//(new WebDriverWait(driver, 15)).until(ExpectedConditions.elementToBeClickable(element));  //checks if element is visible and clickable 
 				       //if (element.isDisplayed() && element.isEnabled()) {
 				    ///	//POAL Specific Block Begins/////////////
 					/**	if (object.equals("Report Title hyperlink"))
@@ -474,12 +499,33 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 						{
 							driver.findElement(By.linkText(testdata)).click();
 						}
-
+						else if (stepdescription.equalsIgnoreCase("Double Click"))
+						{
+							element.click();
+							Thread.sleep(500);
+							//((JavascriptExecutor) driver).executeScript("document.getElementByXpath(//*[text() = 'POA-00435-N9J5']).dispatchEvent(new Event('dblclick'));");
+							//WebElement element = driver.findElement(By.xpath(locatorvalue));
+							
+							Actions dClickAction = new Actions(driver);
+							//dClickAction.moveToElement(element);
+							
+					  		dClickAction.doubleClick();					  		
+					  		//Thread.sleep(1000);		//The Actions do not get executed on the page, so adding this Sleep command
+					  		dClickAction.build().perform();
+					  		
+						}
 						else
 						{
-				    		
-				            element.click();
+							
+				            //element.click();
+							Actions sClickActions = new Actions(driver);
+
+							sClickActions.moveToElement(element).click();
+							Thread.sleep(1000);
+							sClickActions.build().perform();
 						}
+						
+				
 				       // } 
 				       // else 
 				        //{ 
@@ -554,6 +600,91 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 				break;
 			}	
 			
+			case "PRESSKEY":
+			{
+				//checkLocBlankValue(locatorValue);  //check null or blank values and set the exceptionerror and exceptionmessage text.
+				//if (!exceptionerror)  //Execute it only if the values are valid
+			//	{
+					//findElement();					
+					Robot robot = new Robot();
+					switch (testdata.toUpperCase())
+					{
+						case "F1": 
+						{
+							robot.keyPress(KeyEvent.VK_F1);
+							robot.keyRelease(KeyEvent.VK_F1);
+							Thread.sleep(300);
+							break;
+						}
+						case "F2": 
+						{
+							robot.keyPress(KeyEvent.VK_F2);
+							robot.keyRelease(KeyEvent.VK_F2);
+							Thread.sleep(300);
+							break;
+						}
+						case "F5": 
+						{
+							robot.keyPress(KeyEvent.VK_F5);
+							robot.keyRelease(KeyEvent.VK_F5);
+							Thread.sleep(300);
+							break;
+						}
+						case "ENTER": 
+						{
+							robot.keyPress(KeyEvent.VK_ENTER);
+							robot.keyRelease(KeyEvent.VK_ENTER);
+							Thread.sleep(300);
+							break;
+						}
+						case "ESCAPE": 
+						{
+							robot.keyPress(KeyEvent.VK_ESCAPE);
+							robot.keyRelease(KeyEvent.VK_ESCAPE);
+							Thread.sleep(300);
+							break;
+						}
+						case "TAB": 
+						{
+							robot.keyPress(KeyEvent.VK_TAB);
+							robot.keyRelease(KeyEvent.VK_TAB);
+							Thread.sleep(300);
+							break;
+						}
+						case "DOWN": 
+						{
+							robot.keyPress(KeyEvent.VK_DOWN);
+							robot.keyRelease(KeyEvent.VK_DOWN);
+							Thread.sleep(300);
+							break;
+						}
+						case "DELETE ALL": 
+						{
+							robot.keyPress(KeyEvent.VK_CONTROL);
+							robot.keyPress(KeyEvent.VK_A);
+							robot.keyRelease(KeyEvent.VK_CONTROL);
+							robot.keyRelease(KeyEvent.VK_A);
+							Thread.sleep(300);
+							robot.keyPress(KeyEvent.VK_DELETE);
+							robot.keyRelease(KeyEvent.VK_DELETE);
+							Thread.sleep(300);
+							break;
+						}
+						default:
+						{
+							//logger.log(LogStatus.INFO,"Invalid or No Locator type specified for the key to press."); //JOptionPane.showMessageDialog(null,"Invalid Command.");	//No action and show a message box to the user, if required.
+							errormessage="Invalid or No key specified.";
+							exceptionerror=true; 	
+						}
+					}
+						
+				//}
+				
+				
+			}	
+			
+		
+			
 			case "PAUSE EXECUTION (SPECIFY SECONDS)":
 			{
 				long sleeptimeinsec= Long.parseLong(testdata+"000");  //convert string to long				
@@ -568,32 +699,65 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 				break;
 			}
 			
+			
+			
 			case "VALIDATE OBJECT PRESENCE":
 			{
 				checkLocBlankValue(locatorValue);  //check null or blank values and set the exceptionerror and exceptionmessage text.
 				if (!exceptionerror)  //Execute it only if the values are valid
 				{
 					findElement();
-					switch (locatortype)
+					switch (locatortype.toUpperCase())
 					{
 						case "ID": assertTrue(isElementPresent(By.id(locatorValue)));
 					//	 WebElement lnktext = driver.findElement(By.xpath("//ul[@id='courses']/li[@class='sv-list-group-item']/a[contains(text(),'" + value + "')]")); 
 						break;
-						case "Xpath": assertTrue(isElementPresent(By.xpath(locatorValue)));
+						case "XPATH": assertTrue(isElementPresent(By.xpath(locatorValue)));
 						break;
-						case "Name": assertTrue(isElementPresent(By.name(locatorValue)));
+						case "NAME": assertTrue(isElementPresent(By.name(locatorValue)));
 						break;
-						case "CssSelector": assertTrue(isElementPresent(By.cssSelector(locatorValue)));
+						case "CSSSELECTOR": assertTrue(isElementPresent(By.cssSelector(locatorValue)));
 						break;
 						default:
 							//logger.log(LogStatus.INFO,"Invalid or No Locator type specified for the key to press."); //JOptionPane.showMessageDialog(null,"Invalid Command.");	//No action and show a message box to the user, if required.
-							errormessage="Invalid or No Locator type specified for the key to press.";
+							errormessage="Invalid or No Locator type specified for the object.";
 							exceptionerror=true; 						
 					}		
 				
 				}
 				break;
 			}
+			
+			
+			case "VALIDATE OBJECT ABSENCE":
+			{
+				checkLocBlankValue(locatorValue);  //check null or blank values and set the exceptionerror and exceptionmessage text.
+				if (!exceptionerror)  //Execute it only if the values are valid
+				{
+					//findElement(); No need as we are checking the absence
+					switch (locatortype.toUpperCase())
+					{
+						case "ID": assertFalse(isElementPresent(By.id(locatorValue)));
+					//	 WebElement lnktext = driver.findElement(By.xpath("//ul[@id='courses']/li[@class='sv-list-group-item']/a[contains(text(),'" + value + "')]")); 
+						break;
+						case "XPATH": assertFalse(isElementPresent(By.xpath(locatorValue)));
+						break;
+						case "NAME": assertFalse(isElementPresent(By.name(locatorValue)));
+						break;
+						case "CSSSELECTOR": assertFalse(isElementPresent(By.cssSelector(locatorValue)));
+						break;
+						default:
+							//logger.log(LogStatus.INFO,"Invalid or No Locator type specified for the key to press."); //JOptionPane.showMessageDialog(null,"Invalid Command.");	//No action and show a message box to the user, if required.
+							errormessage="Invalid or No Locator type specified for the object.";
+							exceptionerror=true; 						
+					}		
+				
+				}
+				break;
+			}
+			
+			
+			
 		//POAL///	
 			case "VALIDATE IF OBJECT IS PRESENT IN THE TABLE VIEW":
 			{
@@ -762,7 +926,29 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 				driver.switchTo().window(winhandlebefore); 
 				break;
 			}
+			//POAL CRM  //
+			case "MOVE TO FRAME": 
+			{
+				if (testdata.equalsIgnoreCase("Default"))  
+				{
+					driver.switchTo().defaultContent();		//Moves to the top default frame
+				}
+				else
+				{
+					(new WebDriverWait(driver, 15)).until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(testdata));
+				}
+				//WebElement frame = driver.findElement(By.id(testdata));
+				//driver.switchTo().frame(testdata);
+
+				//Then to move out of frame use:- driver.switchTo().defaultContent();
+				
+				//driver.switchTo().frame(testdata);
+				//Thread.sleep(5000);
+				break;
+			}
 			
+			
+			//POAL CRM  //
 			default: 
 			{
 				if (tcid.equals("") && tc_desc.equals("") && stepid.equals("") && stepdescription.equals("") && page.equals("") && object.equals("") && testdata.equals(""))
@@ -1007,6 +1193,7 @@ public void isWebElementVisible(WebElement element)
 
 
 public void findElement() {
+	
 	switch (locatorType.toUpperCase())
 	{
 		case "ID":
@@ -1137,6 +1324,26 @@ public boolean confirmHazardReportClosedStatus(String titleHazardReportStatus, S
 	return false;	
 }
 
+
+	public void getIframe(String frameID) 
+	{
+		
+	/**	JavascriptExecutor jsExecutor = (JavascriptExecutor)driver;
+		//String currentFrame = (String) jsExecutor.executeScript("return window.frameElement");
+		String currentFrame = (String) jsExecutor.executeScript("return self.name");
+		System.out.println();
+		System.out.println(jsExecutor.executeScript("return window.frameElement"));
+		if (!currentFrame.equals(frameID))
+		{
+			driver.switchTo().frame(frameID);
+		}**/
+		/**final List<WebElement> iframes = driver.findElements(By.tagName("iframe"));
+		for (WebElement iframe : iframes) {
+			if (iframe.getAttribute("id").equals(frameID)) {
+	    // 	TODO your stuff.
+	    	}
+		}**/
+	}
 
 
 //POAL Specific Block ENDS//

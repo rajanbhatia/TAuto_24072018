@@ -150,7 +150,7 @@ public void setUp() throws Exception
 		
 		StringBuffer verificationErrors = new StringBuffer();
 		
-	    if ((driver != null))		driver.quit();  // For DEBUGGING, Disable it otherwise ENABLE  
+	   /// if ((driver != null))		driver.quit();  // For DEBUGGING, Disable it otherwise ENABLE  
 	    String verificationErrorString = verificationErrors.toString();
 	    if (!"".equals(verificationErrorString)) 
 	    {
@@ -225,12 +225,12 @@ public void setUp() throws Exception
 		//	int dateYear = getCalDate.get(Calendar.YEAR);
 		
 		//Common code to validate
-		if (dateYear < 2017)	// Feb 2019
+		if (dateYear < 2018)	// Feb 2019
 			return true;
 			//System.out.println("License Expired");
 			//displayMessage("License", "License Expired. Please contact the vendor.");
 			//System.exit(0);
-		else if ((dateYear == 2017) && (dateMon <= 6))		return true;
+		else if ((dateYear == 2018) && (dateMon <= 12))		return true;
 		else return false;
 			
 	}
