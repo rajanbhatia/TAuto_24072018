@@ -1,20 +1,30 @@
-Browser: Open (Parameter)
-Browser: Close
-Button: Validate Text
-Caption/Message/Text: ValidateText
-Checkbox: Validate if Selected
-Dropdown: Select Value
-Dropdown: Validate Value
-Key: Press (Enter/Return/Tab/Escape) 
-Object: Click
-Object: Validate if Present
-Pause: Delay Execution in Seconds 
-Radiobutton: Validate if Selected
-Textbox: Enter Text
-Textbox: Validate Text
-DO NOT EXECUTE THIS STEP
-
-
+Click
+Click on Hyperlink
+Close Browser
+Do Not Execute This Step
+Double Click
+Enter Text
+Enter Text (auto parameterise)
+Enter Text (textarea)
+Open Browser
+Pause Execution (specify seconds)
+PressKey (Enter/Return/Tab/Escape)
+PressKey (F1/F2/F5/Control+A/Shift+Tab/...)
+PressKey (LeftArrow/RightArrow/UpArrow/DownArrow)
+Select Text from dropdown
+Validate if Checkbox is Selected
+Validate if Object is Present in the table view
+Validate if Radiobutton is Selected
+Validate Object Absence
+Validate Object Presence
+Validate Selected Text in dropdown
+Validate Text (caption)
+Validate Text in textarea
+Validate Text in textbox
+Validate Text of button
+Browser: Save Attributes (before new window)
+Browser: Switch to new window
+Move To Frame
 
 
 

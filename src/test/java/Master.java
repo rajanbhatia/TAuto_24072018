@@ -73,7 +73,7 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 		}
 		
 		//Check explicitly for every Web Element presence
-		if (!locatorType.trim().equals("") && !locatorType.equals(null) && !stepdescription.equalsIgnoreCase("Not Executing") && !stepdescription.equalsIgnoreCase("Validate Object Absence") && !stepdescription.equalsIgnoreCase("Click"))  //Adding Click for Microsoft Dynamics CRM only (PAOL) 
+		if (!locatorType.trim().equals("") && !locatorType.equals(null) && !stepdescription.equalsIgnoreCase("Not Executing") && !stepdescription.equalsIgnoreCase("Validate Object Absence") && !stepdescription.equalsIgnoreCase("Click on Hyperlink") && !stepdescription.equalsIgnoreCase("Click"))  //Adding Click for Microsoft Dynamics CRM only (PAOL) 
 		{
 			//driver.switchTo().frame("contentIFrame0");
 			
@@ -292,14 +292,12 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 			}
 			break;
 		}
-			
-			
 					
 			
-			case "VALIDATE TEXT IN TEXTBOX": 
-			case "VALIDATE TEXT IN TEXTAREA": 
-			case "VALIDATE TEXT (CAPTION)": 
-			{
+		case "VALIDATE TEXT IN TEXTBOX": 
+		case "VALIDATE TEXT IN TEXTAREA": 
+		case "VALIDATE TEXT (CAPTION)": 
+		{
 				checkLocParamBlankValues(locatorValue, testdata);  //check null or blank values and set the exceptionerror and exceptionmessage text.
 				if (!exceptionerror)  //Execute it only if the values are valid
 				{	
@@ -327,10 +325,10 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 					} **/					
 				}
 				break;
-			}
+		}
 			
-			case "VALIDATE SUBSET OF TEXT": 
-			{
+		case "VALIDATE SUBSET OF TEXT": 
+		{
 				checkLocParamBlankValues(locatorValue, testdata);  //check null or blank values and set the exceptionerror and exceptionmessage text.
 				if (!exceptionerror)  //Execute it only if the values are valid
 				{	
@@ -340,7 +338,7 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 					
 				}
 				break;
-			}
+		}
 			
 			/**case "Validate Text (caption)": //COVERED ABOVE
 			{
@@ -414,7 +412,7 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 				break;
 			}
 			
-			case "VALIDATE TEXT IN DROPDOWN": 
+			case "VALIDATE SELECTED TEXT IN DROPDOWN": 
 			{
 				checkLocParamBlankValues(locatorValue, testdata);  //check null or blank values and set the exceptionerror and exceptionmessage text.
 				if (!exceptionerror)  //Execute it only if the values are valid
@@ -470,8 +468,7 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 				break;
 			}
 			//case "Object: Click (locator value)":
-			case "CLICK":
-			case "CLICK ON HYPERLINK":
+			case "CLICK":			
 			case "DOUBLE CLICK":	
 			{
 				checkLocBlankValue(locatorValue);  //check null or blank values and set the exceptionerror and exceptionmessage text.
@@ -480,7 +477,7 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 					try {
 						//driver.switchTo().frame("contentIFrame0");		
 						
-				    	findElement();
+						findElement();
 				    	//(new WebDriverWait(driver, 15)).until(ExpectedConditions.elementToBeClickable(element));  //checks if element is visible and clickable 
 				       //if (element.isDisplayed() && element.isEnabled()) {
 				    ///	//POAL Specific Block Begins/////////////
@@ -495,12 +492,10 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 							//driver.findElement(By.linkText(testdata+" - Review Hazard")).click();
 						}**/ 
 						//////		//POAL Specific Block Ends/////////////
-						if (stepdescription.equalsIgnoreCase("Click on hyperlink"))
+						
+						if (stepdescription.equalsIgnoreCase("Double Click"))
 						{
-							driver.findElement(By.linkText(testdata)).click();
-						}
-						else if (stepdescription.equalsIgnoreCase("Double Click"))
-						{
+							
 							element.click();
 							Thread.sleep(500);
 							//((JavascriptExecutor) driver).executeScript("document.getElementByXpath(//*[text() = 'POA-00435-N9J5']).dispatchEvent(new Event('dblclick'));");
@@ -571,6 +566,11 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 				break;
 			}
 			
+			case "CLICK ON HYPERLINK":
+			{
+				driver.findElement(By.linkText(testdata)).click();
+				break;			
+			}
 			
 			case "PRESSKEY (ENTER/RETURN/TAB/ESCAPE)":
 			case "PRESSKEY (LEFTARROW/RIGHTARROW/UPARROW/DOWNARROW)":
