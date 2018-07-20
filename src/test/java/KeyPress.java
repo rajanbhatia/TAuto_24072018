@@ -32,6 +32,8 @@ public class KeyPress  // Class to press keyboard keys at different objects
 		break;
 		case "RETURN": 	id.sendKeys(Keys.RETURN); //String Format should be like "Keys.RETURN"	 
 		break;
+		case "F1": 	id.sendKeys(Keys.F1); //String Format should be like "Keys.RETURN"	 
+		break;
 		case "F2": 	id.sendKeys(Keys.F2); //String Format should be like "Keys.RETURN"	 
 		break;
 		case "F3": 	id.sendKeys(Keys.F3); //String Format should be like "Keys.RETURN"	 

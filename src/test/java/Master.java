@@ -574,6 +574,7 @@ public void main(String tcid, String tc_desc, String stepid, String step_desc, S
 			
 			case "PRESSKEY (ENTER/RETURN/TAB/ESCAPE)":
 			case "PRESSKEY (LEFTARROW/RIGHTARROW/UPARROW/DOWNARROW)":
+			case "PRESSKEY (F1/F2/F5/CONTROL+A/SHIFT+TAB/...)":	
 			{
 				checkLocBlankValue(locatorValue);  //check null or blank values and set the exceptionerror and exceptionmessage text.
 				if (!exceptionerror)  //Execute it only if the values are valid
