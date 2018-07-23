@@ -7,9 +7,9 @@ public class InvokeMaster {
 	public static String sheetDirPathAndName;
 	public static String sheetDirPath;
 		public static void main(String[] args) {
-		//	sheetDirPathAndName = "C:\\Test\\CRMAutomatedTestCases.xlsm";
-		//	sheetDirPath = "C:\\Test\\";
-			if (args.length > 0)			// ENABLE FOR TOOL, for debigging disable it
+			sheetDirPathAndName = "C:\\Test\\CRMAutomatedTestCases.xlsm";
+			sheetDirPath = "C:\\Test\\";
+			/**if (args.length > 0)			// ENABLE FOR TOOL, for debigging disable it
 			{
 				
 				if (!args[0].equals(null) && !args[0].equals(""))
@@ -30,7 +30,7 @@ public class InvokeMaster {
 				JOptionPane.showMessageDialog(null,"Issue in identifying the User directory.");
 				System.exit(1);
 				//sheetDirPathAndName= null; //System.getProperty("user.dir")+"/TestCases.xlsm";				
-			}
+			}**/
 			//	for(String s : args){
 			//		System.out.println("Hello"+ s);
 			 //   }

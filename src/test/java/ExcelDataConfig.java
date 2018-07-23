@@ -132,14 +132,26 @@ public class ExcelDataConfig {
 	//Get data from Excel	
 	public String getData(String sheetName, int row, int column)
 	{
-		Cell cell=null;
-		DataFormatter formatter = new DataFormatter(); //creating formatter using the default locale
-		//sheetxlsx = wbxlsx.getSheetAt(sheetnumber);
-		sheetxlsx = wbxlsx.getSheet(sheetName);
-		cell = sheetxlsx.getRow(row).getCell(column);   //get the value from the cell
-		String data = formatter.formatCellValue((Cell) cell);  //Returns the formatted value of a cell as a String regardless of the cell type.
-		
-		return data;		
+		String data = null;
+		try {
+			Cell cell=null;
+			DataFormatter formatter = new DataFormatter(); //creating formatter using the default locale
+			//sheetxlsx = wbxlsx.getSheetAt(sheetnumber);
+			sheetxlsx = wbxlsx.getSheet(sheetName);
+			cell = sheetxlsx.getRow(row).getCell(column);   //get the value from the cell
+			data = formatter.formatCellValue((Cell) cell);  //Returns the formatted value of a cell as a String regardless of the cell type.
+			
+			
+		} catch (Exception e) {
+			if (e.getMessage()==null)		// In case excel has no data but picked up being active.
+			{
+				return null;
+			}
+			JOptionPane.showMessageDialog(null, "Error: "+e.getMessage() + ". "+ "Problem in reading Test Cases data from excel.", "Exception",0);
+			//System.exit(1);
+			//System.out.println(e.getMessage());
+		}
+		return data;	
 	}
 	
 	public int getRowCount(String sheetName)

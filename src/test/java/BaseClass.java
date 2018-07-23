@@ -163,6 +163,11 @@ public void setUp() throws Exception
 	    
 	    copyExecutioReportToMainDirectory();
 	    /// Completion Message///
+	    if (f.isVisible())  // In case there is an error and Progress bar is still running.	
+	    {
+	    	f.setVisible(false);
+	       	f.dispose();
+	    }
 	    JOptionPane pane = new JOptionPane("Test Execution Completed.", JOptionPane.INFORMATION_MESSAGE);
 	    JDialog dialog = pane.createDialog("Automation Testing");
 	    dialog.setAlwaysOnTop(true);

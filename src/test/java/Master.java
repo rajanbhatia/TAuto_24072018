@@ -1035,8 +1035,13 @@ public void tearD(ITestResult result) throws Exception
 	 	 {
 	 		 image=logger.addScreenCapture(screenshot_path);
 	 	 }
-		 String exceptionmessage= image +  "Error Message: "+ result.getThrowable()+".\n"+errormessage;	 	 
-	 	 logger.log(LogStatus.FAIL, "Step ID: "+stepid+", Step Desc: "+stepdescription+", Object: "+ objectName, exceptionmessage);
+		 String exceptionmessage= image +  "Error Message: "+ result.getThrowable()+".\n"+errormessage;	 
+		 
+		 if (stepid !=null && stepdescription!=null && objectName!=null)			//Only log into Test Report if there is a data in the row. Do not log the results if there is a blank row and Null returned from ExcelDataConfig (excel reading). 
+		 {
+			 logger.log(LogStatus.FAIL, "Step ID: "+stepid+", Step Desc: "+stepdescription+", Object: "+ objectName, exceptionmessage);
+		 }
+		 
 	 	 ///logger.log(LogStatus.INFO,"PageSource",driver.getPageSource());
 	 	 //if(ITestResult.FAILURE==result.getStatus())		logger.log(LogStatus.FAIL, "Step ID: "+stepid+", Step Desc: "+stepdescription+": FAILED. Error Message: "+ result.getThrowable());
 	 	 //if (exceptionerror)  logger.log(LogStatus.FAIL, "Step ID: "+stepid+", Step Desc: "+stepdescription+": FAILED. Error Message: "+ errormessage);
@@ -1053,7 +1058,7 @@ public void tearD(ITestResult result) throws Exception
 	 {
 	 	 if (stepdescription.equalsIgnoreCase("DO NOT EXECUTE THIS STEP"))
 	 	 {
-	 		 logger.log(LogStatus.PASS, "Step ID: "+stepid+", Step Desc: "+stepdescription+", Object: "+ objectName,"SKIPPED");  //to capture the non-executed step in the report.
+	 		logger.log(LogStatus.PASS, "Step ID: "+stepid+", Step Desc: "+stepdescription+", Object: "+ objectName,"SKIPPED");  //to capture the non-executed step in the report.
 	 	 }
 	 	 else if ((allRowBlank==true) || (stepdescription.equalsIgnoreCase("Not Executing")))
 	 	 {
@@ -1061,7 +1066,7 @@ public void tearD(ITestResult result) throws Exception
 	 	 }
 	 	 else 
 	 	 {
-	 		 logger.log(LogStatus.PASS, "Step ID: "+stepid+", Step Desc: "+stepdescription+", Object: "+ objectName,"PASSED");	
+	 		logger.log(LogStatus.PASS, "Step ID: "+stepid+", Step Desc: "+stepdescription+", Object: "+ objectName,"PASSED");	
 	 	 }
 	 	
 	 }
