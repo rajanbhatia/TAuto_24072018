@@ -32,6 +32,7 @@ public final class PublicServerTime {
 
             }
             catch (IOException e) {
+                System.out.println("Failed to read time from NTP server.");
                 e.printStackTrace();
             }
         }
