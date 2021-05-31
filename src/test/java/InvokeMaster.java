@@ -9,7 +9,7 @@ public class InvokeMaster {
 		public static void main(String[] args) {
 			sheetDirPathAndName = "C:\\Test\\CRMAutomatedTestCases.xlsm";
 			sheetDirPath = "C:\\Test\\";
-			/**if (args.length > 0)			// ENABLE FOR TOOL, for debigging disable it
+			/**if (args.length > 0)			// ENABLE FOR TOOL, for debugging disable it
 			{
 				
 				if (!args[0].equals(null) && !args[0].equals(""))
