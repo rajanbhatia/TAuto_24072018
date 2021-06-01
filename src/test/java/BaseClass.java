@@ -205,38 +205,61 @@ public void setUp() throws Exception
 	private Boolean checkLicense()
 	{
 		//PublicServer GetDateTime
-		
+		int dateMon=0;
+	    int dateYear=0;
 		Date serverDate = (PublicServerTime.getNTPDate());
+		
 		if(serverDate == null || serverDate.toString()=="") 
 		{
-			displayMessage("License", "Problem with license authentication. Please contact the vendor.");
-			System.exit(0);
-			//return false;
+			//If Server returns Null then check Local Machine date	
+			// System.out.println("Date: "+ getCalDate.get(Calendar.MONTH)+"/"+getCalDate.get(Calendar.YEAR));
+			 //System.out.println(System.getProperty("user.name")); //To check the USERNAME of the machine
+			
+			 if(getCalDate == null || getCalDate.toString()=="")  //If can't find the local date then fail it
+			 {
+					 displayMessage("License", "Problem with license authentication. Please contact the vendor.");
+					 System.exit(0);
+						//return false;
+			 }
+				 
+			 dateMon = getCalDate.get(Calendar.MONTH)+1; //Local computer month
+			 dateYear = getCalDate.get(Calendar.YEAR);  //Local computer year
+			 if (dateYear < 2022)	// Year 2022
+					return true;
+					//System.out.println("License Expired");
+					//displayMessage("License", "License Expired. Please contact the vendor.");
+					//System.exit(0);
+			 else if ((dateYear == 2021) && (dateMon <= 8))		return true; //Upto Aug 2021
+			 else return false;
+		 }	 
+		 else   // Had to duplicate dateYear and DateMon as separate declaration was expected for the below code
+		 {
+						
+			@SuppressWarnings("deprecation")
+			int dateMonP = serverDate.getMonth()+1;
+			
+			
+			@SuppressWarnings("deprecation")
+			int dateYearP =  serverDate.getYear()+1900;   //getYear gives currentyear-1900
+			//System.out.println(dateMon + " " + dateYear);
+		 
+		
+		//Local Machine GetDateTime	
+			//System.out.println("Date: "+ getCalDate.get(Calendar.MONTH)+"/"+getCalDate.get(Calendar.YEAR));
+			// System.out.println(System.getProperty("user.name")); To check the USERNAME of the machine
+		
+			//	int dateMon = getCalDate.get(Calendar.MONTH)+1;
+			//	int dateYear = getCalDate.get(Calendar.YEAR);
+			
+			//Common code to validate
+			if (dateYearP < 2022)	// Year 2022
+				return true;
+				//System.out.println("License Expired");
+				//displayMessage("License", "License Expired. Please contact the vendor.");
+				//System.exit(0);
+			else if ((dateYearP == 2021) && (dateMonP <= 8))		return true;
+			else return false;
 		}
-				
-				
-		@SuppressWarnings("deprecation")
-		int dateMon = serverDate.getMonth()+1;
-		@SuppressWarnings("deprecation")
-		int dateYear =  serverDate.getYear()+1900;   //getYear gives currentyear-1900
-		//System.out.println(dateMon + " " + dateYear);
-		
-		
-	//Local Machine GetDateTime	
-		//System.out.println("Date: "+ getCalDate.get(Calendar.MONTH)+"/"+getCalDate.get(Calendar.YEAR));
-		// System.out.println(System.getProperty("user.name")); To check the USERNAME of the machine
-	
-		//	int dateMon = getCalDate.get(Calendar.MONTH)+1;
-		//	int dateYear = getCalDate.get(Calendar.YEAR);
-		
-		//Common code to validate
-		if (dateYear < 2018)	// Feb 2019
-			return true;
-			//System.out.println("License Expired");
-			//displayMessage("License", "License Expired. Please contact the vendor.");
-			//System.exit(0);
-		else if ((dateYear == 2018) && (dateMon <= 12))		return true;
-		else return false;
 			
 	}
 	
